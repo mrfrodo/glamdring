@@ -1,4 +1,4 @@
-package com.frodo.glamdring;
+package com.frodo.glamdring.infrastructure.adapters.in.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
