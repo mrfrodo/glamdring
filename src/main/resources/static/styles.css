@@ -1,5 +1,5 @@
 :root {
-    --card-bg: rgba(22, 31, 51, 0.45); /* Litt mer synlig boks nå som den ligger oppå contain-bildet */
+    --card-bg: rgba(22, 31, 51, 0.45);
     --accent-glow: #38bdf8;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
@@ -16,10 +16,9 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
-    background-color: #0b0f19; /* Fargen som fyller tomrommet rundt bildet hvis skjermen er bredere */
+    background-color: #0b0f19;
 }
 
-/* Bruker contain for å vise hele 921x733-bildet uten kutt */
 .bg-image {
     position: fixed;
     top: 0;
@@ -30,7 +29,6 @@ body {
     z-index: -2;
 }
 
-/* Mørkt filter over bildet for å dempe det litt slik teksten synes godt */
 body::before {
     content: '';
     position: fixed;
@@ -42,41 +40,72 @@ body::before {
     z-index: -1;
 }
 
-.container {
+.layout-wrapper {
+    display: flex;
+    flex-direction: row; /* Viktig: tvinger dem på samme linje horisontalt */
+    justify-content: center;
+    align-items: flex-start; /* Holder dem på linje i toppen */
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.glass-card {
     background: var(--card-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 2.5rem 3rem;
-    max-width: 520px;
-    width: 90%;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.15);
-    text-align: center;
     position: relative;
     z-index: 1;
     overflow: hidden;
 }
 
-/* Glødende alvisk effektaura i toppen */
-.container::before {
+
+.main-container {
+    padding: 2.5rem 3rem;
+    min-width: 570px ;
+    max-width: 620px;
+    width: 90%;
+    text-align: center;
+    margin-top: 19rem;
+    margin-right: 1rem;
+    transform: translateX(+50px);
+}
+
+.right-menu {
+    padding: 3rem 2.5rem;
+    width: 223px;
+    min-width: 610px;
+    max-width: 610px;
+    min-height: 800px;
+    text-align: left;
+    transform: translateX(+50px);
+}
+
+.main-container::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 6px;
     background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
     z-index: 2;
 }
 
-h1 {
-    margin: 0 0 0.25rem 0;
-    font-size: 2.4rem;
-    letter-spacing: 1px;
-    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.main-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #c084fc, #818cf8, #38bdf8);
+    box-shadow: 0 0 15px #c084fc, 0 0 30px #38bdf8;
+    z-index: 2;
 }
 
 p.subtitle {
@@ -104,13 +133,8 @@ p.subtitle {
 
 .lore2 {
     color: var(--text-muted);
-    font-size: 0.83rem;
+    font-size: 0.75rem;
     line-height: 1.6;
     font-style: italic;
     margin-bottom: 1.5rem;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4)); }
-    50% { transform: scale(1.08); filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.85)); }
 }
