@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glamdring — The Foe-hammer</title>
+    <title>Glamdring.no — Developer Portal for Software Engineering, DDD & Hexagonal Architecture</title>
+    <meta name="description" content="Glamdring.no — a developer portal for programmers learning software engineering fundamentals, Domain-Driven Design, and Hexagonal Architecture.">
+    <meta name="keywords" content="developer portal, software engineering fundamentals, domain driven design, hexagonal architecture, programming, DDD, ports and adapters">
     <link rel="stylesheet" th:href="@{/styles.css}">
+    <script th:src="@{/app.js}" defer></script>
 </head>
 <body>
 
+<div class="top-banner">
+    <p>Make better software - Slay domain complexity</p>
+</div>
+
 <img src="/glamdring.png" alt="Glamdring Background" class="bg-image">
 
-<div class="layout-wrapper">
-    <div class="main-container glass-card">
+<div class="main-container">
         <p class="subtitle">Forged in Gondolin</p>
 
         <div class="divider"></div>
@@ -23,13 +29,27 @@
             Foe-hammer? Foe-hammer? The goblins know the sword of Gondolin!
         </p>
     </div>
-    <div class="right-menu glass-card">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-    </div>
+
+<div class="bottom-banner">
+    <p>Forged to cut through complexity</p>
 </div>
+
+<aside class="right-panel">
+    <div class="panel-header">
+        <span>Trending in Tech</span>
+    </div>
+    <div id="trend-list">
+        <div th:each="trend : ${trends}" class="trend-item">
+            <div class="trend-topic" th:text="${trend.topic.searchTerm}"></div>
+            <div class="trend-title" th:text="${trend.title}"></div>
+            <div class="trend-meta" th:text="${#temporals.format(trend.publishedAt, 'MMM dd HH:mm')} + ' · Bluesky'"></div>
+        </div>
+        <div th:if="${#lists.isEmpty(trends)}" class="trend-empty">
+            Fetching trends…
+        </div>
+    </div>
+</aside>
+<aside class="left-panel"></aside>
 
 </body>
 </html>
