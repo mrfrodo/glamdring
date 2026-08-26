@@ -1,6 +1,6 @@
 package com.frodo.glamdring.domain.domainservices;
 
-import com.frodo.glamdring.domain.models.TechTrend;
+import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
 
 import java.time.Instant;
@@ -9,20 +9,20 @@ import java.util.List;
 
 public class TechTrendDomainService {
 
-    public List<TechTrend> selectTopTrends(List<TechTrend> candidates, int limit) {
+    public List<Tech> selectTopTrends(List<Tech> candidates, int limit) {
         return candidates.stream()
-                .sorted(Comparator.comparing(TechTrend::getPublishedAt).reversed())
+                .sorted(Comparator.comparing(Tech::getPublishedAt).reversed())
                 .limit(limit)
                 .toList();
     }
 
-    public List<TechTrend> filterFresh(List<TechTrend> trends, Instant threshold) {
+    public List<Tech> filterFresh(List<Tech> trends, Instant threshold) {
         return trends.stream()
                 .filter(t -> t.isNewerThan(threshold))
                 .toList();
     }
 
-    public List<TechTrend> filterByTopic(List<TechTrend> trends, TechTopic topic) {
+    public List<Tech> filterByTopic(List<Tech> trends, TechTopic topic) {
         return trends.stream()
                 .filter(t -> t.isAbout(topic))
                 .toList();

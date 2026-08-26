@@ -1,7 +1,7 @@
 package com.frodo.glamdring.infrastructure.adapters.in.rest;
 
-import com.frodo.glamdring.application.ports.in.GetTechTrendsUseCase;
-import com.frodo.glamdring.domain.models.TechTrend;
+import com.frodo.glamdring.application.ports.in.GetTechUseCase;
+import com.frodo.glamdring.domain.models.Tech;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,27 +18,27 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/trends")
-public class TechTrendRestController {
+public class TechRestController {
 
     private static final int DEFAULT_LIMIT = 5;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMM dd HH:mm").withZone(ZoneOffset.UTC);
 
-    private final GetTechTrendsUseCase getTechTrendsUseCase;
+    private final GetTechUseCase getTechUseCase;
 
-    public TechTrendRestController(GetTechTrendsUseCase getTechTrendsUseCase) {
-        this.getTechTrendsUseCase = getTechTrendsUseCase;
+    public TechRestController(GetTechUseCase getTechUseCase) {
+        this.getTechUseCase = getTechUseCase;
     }
 
     @GetMapping
     public ResponseEntity<List<TechTrendDto>> getTopTrends(
             @RequestParam(defaultValue = "5") int limit) {
-        List<TechTrendDto> dtos = getTechTrendsUseCase.getTopTrends(limit).stream()
+        List<TechTrendDto> dtos = getTechUseCase.getTopTrends(limit).stream()
                 .map(this::toDto)
                 .toList();
         return ResponseEntity.ok(dtos);
     }
 
-    private TechTrendDto toDto(TechTrend trend) {
+    private TechTrendDto toDto(Tech trend) {
         return new TechTrendDto(
                 trend.getTitle(),
                 trend.getSummary(),

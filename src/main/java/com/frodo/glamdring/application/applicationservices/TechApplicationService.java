@@ -1,10 +1,10 @@
 package com.frodo.glamdring.application.applicationservices;
 
-import com.frodo.glamdring.application.ports.in.GetTechTrendsUseCase;
+import com.frodo.glamdring.application.ports.in.GetTechUseCase;
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
 import com.frodo.glamdring.application.ports.out.TechTrendRepositoryPort;
 import com.frodo.glamdring.domain.domainservices.TechTrendDomainService;
-import com.frodo.glamdring.domain.models.TechTrend;
+import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Does not contain business rules — those live in TechTrendDomainService.
  */
 @Service
-public class TechTrendApplicationService implements GetTechTrendsUseCase {
+public class TechApplicationService implements GetTechUseCase {
 
     private static final int FETCH_PER_TOPIC = 3;
 
@@ -25,7 +25,7 @@ public class TechTrendApplicationService implements GetTechTrendsUseCase {
     private final TechTrendRepositoryPort techTrendRepositoryPort;
     private final TechTrendDomainService techTrendDomainService;
 
-    public TechTrendApplicationService(
+    public TechApplicationService(
             ExternalTechFeedPort externalTechFeedPort,
             TechTrendRepositoryPort techTrendRepositoryPort,
             TechTrendDomainService techTrendDomainService) {
@@ -38,8 +38,8 @@ public class TechTrendApplicationService implements GetTechTrendsUseCase {
      * Returns the top N most recent trending tech signals from the cache.
      */
     @Override
-    public List<TechTrend> getTopTrends(int limit) {
-        List<TechTrend> all = techTrendRepositoryPort.findAll();
+    public List<Tech> getTopTrends(int limit) {
+        List<Tech> all = techTrendRepositoryPort.findAll();
         return techTrendDomainService.selectTopTrends(all, limit);
     }
 
@@ -48,9 +48,9 @@ public class TechTrendApplicationService implements GetTechTrendsUseCase {
      * Called by the scheduler every minute.
      */
     public void refreshTrends() {
-        List<TechTrend> fresh = new ArrayList<>();
+        List<Tech> fresh = new ArrayList<>();
         for (TechTopic topic : TechTopic.values()) {
-            List<TechTrend> fetched = externalTechFeedPort.fetchByTopic(topic, FETCH_PER_TOPIC);
+            List<Tech> fetched = externalTechFeedPort.fetchByTopic(topic, FETCH_PER_TOPIC);
             fetched.stream()
                     .filter(t -> !techTrendRepositoryPort.existsById(t.getId()))
                     .forEach(fresh::add);

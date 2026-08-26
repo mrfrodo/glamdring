@@ -1,6 +1,6 @@
 package com.frodo.glamdring.infrastructure.config;
 
-import com.frodo.glamdring.application.applicationservices.TechTrendApplicationService;
+import com.frodo.glamdring.application.applicationservices.TechApplicationService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TechTrendScheduler {
 
-    private final TechTrendApplicationService techTrendApplicationService;
+    private final TechApplicationService techApplicationService;
 
-    public TechTrendScheduler(TechTrendApplicationService techTrendApplicationService) {
-        this.techTrendApplicationService = techTrendApplicationService;
+    public TechTrendScheduler(TechApplicationService techApplicationService) {
+        this.techApplicationService = techApplicationService;
     }
 
     @Scheduled(fixedRateString = "${glamdring.scheduler.refresh-rate-ms:60000}")

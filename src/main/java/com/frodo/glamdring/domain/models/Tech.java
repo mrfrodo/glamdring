@@ -9,7 +9,7 @@ import java.util.UUID;
  * A TechTrend captures a signal from the tech community — a post, article or discussion
  * that indicates momentum around a given technology topic.
  */
-public class TechTrend {
+public class Tech {
 
     private final TechTrendId id;
     private final String title;
@@ -18,7 +18,7 @@ public class TechTrend {
     private final Instant publishedAt;
     private final String source;
 
-    private TechTrend(Builder builder) {
+    private Tech(Builder builder) {
         this.id = Objects.requireNonNull(builder.id, "id must not be null");
         this.title = Objects.requireNonNull(builder.title, "title must not be null");
         this.summary = Objects.requireNonNull(builder.summary, "summary must not be null");
@@ -49,7 +49,7 @@ public class TechTrend {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TechTrend t)) return false;
+        if (!(o instanceof Tech t)) return false;
         return id.equals(t.id);
     }
 
@@ -80,6 +80,6 @@ public class TechTrend {
         public Builder publishedAt(Instant publishedAt) { this.publishedAt = publishedAt; return this; }
         public Builder source(String source) { this.source = source; return this; }
 
-        public TechTrend build() { return new TechTrend(this); }
+        public Tech build() { return new Tech(this); }
     }
 }

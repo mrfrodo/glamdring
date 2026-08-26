@@ -1,7 +1,7 @@
 package com.frodo.glamdring.infrastructure.adapters.out.persistence;
 
 import com.frodo.glamdring.application.ports.out.TechTrendRepositoryPort;
-import com.frodo.glamdring.domain.models.TechTrend;
+import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTrendId;
 import com.frodo.glamdring.domain.models.TechTopic;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class H2TechTrendRepository implements TechTrendRepositoryPort {
+public class H2TechRepository implements TechTrendRepositoryPort {
 
     private final JdbcClient jdbcClient;
 
-    public H2TechTrendRepository(JdbcClient jdbcClient) {
+    public H2TechRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
     @Override
-    public void save(TechTrend trend) {
+    public void save(Tech trend) {
         jdbcClient.sql("""
                 MERGE INTO tech_trend (id, title, summary, topic, published_at, source)
                 KEY (id)
@@ -39,12 +39,12 @@ public class H2TechTrendRepository implements TechTrendRepositoryPort {
     }
 
     @Override
-    public void saveAll(List<TechTrend> trends) {
+    public void saveAll(List<Tech> trends) {
         trends.forEach(this::save);
     }
 
     @Override
-    public Optional<TechTrend> findById(TechTrendId id) {
+    public Optional<Tech> findById(TechTrendId id) {
         return jdbcClient.sql("SELECT * FROM tech_trend WHERE id = :id")
                 .param("id", id.value())
                 .query(this::mapRow)
@@ -52,14 +52,14 @@ public class H2TechTrendRepository implements TechTrendRepositoryPort {
     }
 
     @Override
-    public List<TechTrend> findAll() {
+    public List<Tech> findAll() {
         return jdbcClient.sql("SELECT * FROM tech_trend ORDER BY published_at DESC")
                 .query(this::mapRow)
                 .list();
     }
 
     @Override
-    public List<TechTrend> findTopNOrderedByPublishedAtDesc(int limit) {
+    public List<Tech> findTopNOrderedByPublishedAtDesc(int limit) {
         return jdbcClient.sql("SELECT * FROM tech_trend ORDER BY published_at DESC LIMIT :limit")
                 .param("limit", limit)
                 .query(this::mapRow)
@@ -80,8 +80,8 @@ public class H2TechTrendRepository implements TechTrendRepositoryPort {
         jdbcClient.sql("DELETE FROM tech_trend").update();
     }
 
-    private TechTrend mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return TechTrend.builder()
+    private Tech mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return Tech.builder()
                 .id(rs.getString("id"))
                 .title(rs.getString("title"))
                 .summary(rs.getString("summary"))

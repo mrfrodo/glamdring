@@ -6,9 +6,6 @@ public class Status {
 
     public static void main(String[] args) throws Exception {
 
-        // im on linux debian
-        // fill inn correct java command and print out memory usage
-
         // --- 1. JVM Heap Memory Usage ---
         Runtime runtime = Runtime.getRuntime();
 
@@ -51,7 +48,6 @@ public class Status {
         System.out.println("Free Disk Space:  " + formatBytes(freeDisk, false));
     }
 
-    // Helper method to convert bytes to megabytes (MB) for readability
     private static String formatBytes(long bytes, boolean inMegabyte) {
         if (inMegabyte) {
             return (bytes / (1024 * 1024)) + " MB (" + bytes + " bytes)";

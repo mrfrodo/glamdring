@@ -1,7 +1,7 @@
 package com.frodo.glamdring.infrastructure.adapters.out.messaging;
 
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
-import com.frodo.glamdring.domain.models.TechTrend;
+import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
 import com.frodo.glamdring.domain.models.TechTrendId;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -27,7 +26,7 @@ public class BlueskyAdapter implements ExternalTechFeedPort {
     }
 
     @Override
-    public List<TechTrend> fetchByTopic(TechTopic topic, int limit) {
+    public List<Tech> fetchByTopic(TechTopic topic, int limit) {
         try {
             BlueskySearchResponse response = webClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -55,14 +54,14 @@ public class BlueskyAdapter implements ExternalTechFeedPort {
         }
     }
 
-    private TechTrend mapToTechTrend(BlueskyPost post, TechTopic topic) {
+    private Tech mapToTechTrend(BlueskyPost post, TechTopic topic) {
         String id = post.cid() != null ? post.cid() : UUID.randomUUID().toString();
         String text = post.record().text();
         String title = text.length() > 100 ? text.substring(0, 100) + "…" : text;
         String summary = text.length() > 300 ? text.substring(0, 300) + "…" : text;
         Instant publishedAt = parseInstant(post.record().createdAt());
 
-        return TechTrend.builder()
+        return Tech.builder()
                 .id(new TechTrendId(id))
                 .title(title)
                 .summary(summary)
