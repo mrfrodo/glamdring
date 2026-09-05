@@ -13,7 +13,13 @@ public enum TechTopic {
     DEVOPS("devops"),
     CLEAN_ARCHITECTURE("clean architecture"),
     EVENT_DRIVEN("event driven architecture"),
-    KAFKA("apache kafka");
+    KAFKA("apache kafka"),
+    RUST("rust"),
+    KUBERNETES("kubernetes"),
+    WEBASSEMBLY("webassembly"),
+    GOLANG("golang"),
+    TYPESCRIPT("typescript"),
+    AI_AGENTS("ai agents");
 
     private final String searchTerm;
 

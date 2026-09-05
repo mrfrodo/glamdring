@@ -19,7 +19,6 @@ public class TechTrendScheduler {
 
     @Scheduled(fixedRateString = "${glamdring.scheduler.refresh-rate-ms:60000}")
     public void refreshTechTrends() {
-        //techTrendApplicationService.refreshTrends();
-        System.out.println("dummu refresh");
+        techApplicationService.refreshTrends();
     }
 }

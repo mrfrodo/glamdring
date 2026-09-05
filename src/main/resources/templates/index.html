@@ -44,7 +44,7 @@
         <div th:each="trend : ${trends}" class="trend-item">
             <div class="trend-topic" th:text="${trend.topic.searchTerm}"></div>
             <div class="trend-title" th:text="${trend.title}"></div>
-            <div class="trend-meta" th:text="${#temporals.format(trend.publishedAt, 'MMM dd HH:mm')} + ' · Bluesky'"></div>
+            <div class="trend-meta" th:text="${#temporals.format(trend.publishedAt, 'MMM dd HH:mm')} + ' · ' + ${trend.source}"></div>
         </div>
         <div th:if="${#lists.isEmpty(trends)}" class="trend-empty">
             Fetching trends…
