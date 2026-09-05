@@ -5,7 +5,7 @@ import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
 import com.frodo.glamdring.domain.models.TechTrendId;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -19,16 +19,16 @@ public class BlueskyAdapter implements ExternalTechFeedPort {
     private static final String SEARCH_PATH = "/xrpc/app.bsky.feed.searchPosts";
     private static final String SOURCE = "Bluesky";
 
-    private final WebClient webClient;
+    private final RestClient restClient;
 
-    public BlueskyAdapter(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(BLUESKY_API_BASE).build();
+    public BlueskyAdapter(RestClient.Builder restClientBuilder) {
+        this.restClient = restClientBuilder.baseUrl(BLUESKY_API_BASE).build();
     }
 
     @Override
     public List<Tech> fetchByTopic(TechTopic topic, int limit) {
         try {
-            BlueskySearchResponse response = webClient.get()
+            BlueskySearchResponse response = restClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path(SEARCH_PATH)
                             .queryParam("q", topic.getSearchTerm())
@@ -36,8 +36,7 @@ public class BlueskyAdapter implements ExternalTechFeedPort {
                             .queryParam("sort", "latest")
                             .build())
                     .retrieve()
-                    .bodyToMono(BlueskySearchResponse.class)
-                    .block();
+                    .body(BlueskySearchResponse.class);
 
             if (response == null || response.posts() == null) {
                 return Collections.emptyList();

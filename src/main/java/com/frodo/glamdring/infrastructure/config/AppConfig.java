@@ -4,7 +4,7 @@ import com.frodo.glamdring.domain.domainservices.TechTrendDomainService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 /**
  * Infrastructure configuration — wires beans that cannot be auto-detected,
@@ -20,7 +20,7 @@ public class AppConfig {
     }
 
     @Bean
-    public WebClient.Builder webClientBuilder() {
-        return WebClient.builder();
+    public RestClient.Builder restClientBuilder() {
+        return RestClient.builder();
     }
 }
