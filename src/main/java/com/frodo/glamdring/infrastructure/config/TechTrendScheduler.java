@@ -17,7 +17,7 @@ public class TechTrendScheduler {
         this.techApplicationService = techApplicationService;
     }
 
-    @Scheduled(fixedRateString = "${glamdring.scheduler.refresh-rate-ms:60000}")
+    @Scheduled(initialDelay = 0, fixedRateString = "${glamdring.scheduler.refresh-rate-ms:60000}")
     public void refreshTechTrends() {
         techApplicationService.refreshTrends();
     }
