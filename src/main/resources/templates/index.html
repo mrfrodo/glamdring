@@ -28,6 +28,8 @@
         <p class="lore2">
             Foe-hammer? Foe-hammer? The goblins know the sword of Gondolin!
         </p>
+
+        <a class="kills-link" th:href="@{/kills}">See the Kills Log &rarr;</a>
     </div>
 
 <div class="bottom-banner">
@@ -36,7 +38,7 @@
 
 <aside class="right-panel">
     <div class="panel-header">
-        <span>Trending in Tech</span>
+        <span>Goblin Watch</span>
     </div>
     <div id="trend-list">
         <div th:each="trend : ${trends}" class="trend-item">
@@ -51,7 +53,7 @@
 </aside>
 <aside class="left-panel">
     <div class="tip-box">
-        <div class="tip-label">Tip of the Day</div>
+        <div class="tip-label">Words of the Foe-Hammer</div>
         <p class="tip-text" th:text="${tipOfTheDay} ?: 'Warming up the oracle…'"></p>
     </div>
 </aside>

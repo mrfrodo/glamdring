@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Kills Log — Glamdring.no</title>
+    <meta name="description" content="A running log of real domain complexity found and slain — before/after case studies from software built with DDD and hexagonal architecture.">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="kills-body">
+
+<div class="top-banner">
+    <p>Make better software - Slay domain complexity</p>
+</div>
+
+<main class="kills-page">
+    <a class="back-link" th:href="@{/}">&larr; Back to Glamdring</a>
+
+    <h1 class="kills-heading">The Kills Log</h1>
+    <p class="kills-subheading">Complexity slain, one refactor at a time.</p>
+
+    <div class="kills-list">
+        <article th:each="kill : ${kills}" class="kill-card">
+            <div class="kill-header">
+                <span class="kill-topic" th:text="${kill.topic.searchTerm}"></span>
+                <span class="kill-date" th:text="${#temporals.format(kill.slainOn, 'MMM dd, yyyy')}"></span>
+            </div>
+            <h2 class="kill-title" th:text="${kill.title}"></h2>
+            <p class="kill-field"><span class="kill-field-label">The Smell</span><span th:text="${kill.smell}"></span></p>
+            <p class="kill-field"><span class="kill-field-label">The Kill</span><span th:text="${kill.theKill}"></span></p>
+            <p class="kill-field kill-lesson"><span class="kill-field-label">Lesson</span><span th:text="${kill.lesson}"></span></p>
+        </article>
+
+        <p th:if="${#lists.isEmpty(kills)}" class="kills-empty">No kills logged yet — the hunt is young.</p>
+    </div>
+</main>
+
+</body>
+</html>

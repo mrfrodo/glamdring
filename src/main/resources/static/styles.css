@@ -118,6 +118,18 @@ p.subtitle {
     margin-bottom: 1.5rem;
 }
 
+.kills-link {
+    color: var(--accent-glow);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.kills-link:hover {
+    text-decoration: underline;
+}
+
 .top-banner, .bottom-banner {
     position: fixed;
     left: 0;
@@ -254,4 +266,115 @@ p.subtitle {
     font-style: italic;
     text-align: center;
     padding: 1rem 0;
+}
+
+/* Kills log page */
+
+.kills-body {
+    display: block;
+    overflow-y: auto;
+    background-color: #0b0f19;
+}
+
+.kills-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--accent-glow);
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.kills-heading {
+    margin: 0 0 0.25rem;
+    font-size: 1.8rem;
+}
+
+.kills-subheading {
+    color: var(--text-muted);
+    margin: 0 0 2.5rem;
+    font-size: 0.9rem;
+}
+
+.kills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.kill-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+.kill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.kill-topic {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--accent-glow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kill-date {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.kill-title {
+    margin: 0 0 1rem;
+    font-size: 1.15rem;
+}
+
+.kill-field {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin: 0 0 0.85rem;
+}
+
+.kill-field:last-child {
+    margin-bottom: 0;
+}
+
+.kill-field-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--accent-glow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.25rem;
+}
+
+.kill-lesson {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.kills-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
 }
