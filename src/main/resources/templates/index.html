@@ -60,5 +60,21 @@
     </div>
 </aside>
 
+<div class="discussion discussion-initiator" th:if="${discussion}">
+    <img src="/qwen.png" alt="Qwen" class="discussion-avatar">
+    <div class="discussion-bubble">
+        <span class="discussion-name">Qwen</span>
+        <p class="discussion-message" th:text="${discussion.openingMessage}"></p>
+    </div>
+</div>
+
+<div class="discussion discussion-responder" th:if="${discussion}">
+    <div class="discussion-bubble">
+        <span class="discussion-name">Qwen Coder</span>
+        <p class="discussion-message" th:text="${discussion.replyMessage}"></p>
+    </div>
+    <img src="/qwen-codr.png" alt="Qwen Coder" class="discussion-avatar">
+</div>
+
 </body>
 </html>

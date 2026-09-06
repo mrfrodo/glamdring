@@ -1,5 +1,6 @@
 package com.frodo.glamdring;
 
+import com.frodo.glamdring.application.applicationservices.DiscussionApplicationService;
 import com.frodo.glamdring.application.applicationservices.TipOfTheDayApplicationService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,31 @@ public class Glamdring {
 				System.out.println("==============================");
 			} catch (Exception e) {
 				System.out.println("Ollama not reachable — skipping tip of the day (" + e.getMessage() + ")");
+			}
+		};
+	}
+
+	/**
+	 * Runs the one-shot Qwen ↔ Qwen Coder tech discussion once at startup —
+	 * initiator opens, responder answers, done. Same "best effort, don't
+	 * block startup" treatment as the tip of the day.
+	 */
+	@Bean
+	ApplicationRunner qwenDiscussion(DiscussionApplicationService discussionApplicationService) {
+		return args -> {
+			try {
+				discussionApplicationService.startDiscussion();
+				System.out.println("=== Qwen discussion ===");
+				discussionApplicationService.getDiscussion().ifPresentOrElse(
+						discussion -> {
+							System.out.println("Qwen: " + discussion.getOpeningMessage());
+							System.out.println("Qwen Coder: " + discussion.getReplyMessage());
+						},
+						() -> System.out.println("(no discussion)")
+				);
+				System.out.println("========================");
+			} catch (Exception e) {
+				System.out.println("Ollama not reachable — skipping tech discussion (" + e.getMessage() + ")");
 			}
 		};
 	}

@@ -15,6 +15,10 @@ ddd and domain driven design
 avoid anemic models at all cost  
 use SOLID principles  
 
+## ABSOLUTE RULE
+
+Never put secrets in the code
+
 
 ## ABSOLUTE INSTALLATION RULE
 
