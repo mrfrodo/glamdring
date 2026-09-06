@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS tech_trend (
+CREATE TABLE IF NOT EXISTS tech (
     id           VARCHAR(255)  NOT NULL PRIMARY KEY,
     title        VARCHAR(512)  NOT NULL,
     summary      VARCHAR(2048) NOT NULL,

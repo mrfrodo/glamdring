@@ -27,7 +27,7 @@ public class HackerNewsAdapter implements ExternalTechFeedPort {
 
     private static final String HN_API_BASE = "https://hn.algolia.com";
     private static final String FRONT_PAGE_PATH = "/api/v1/search";
-    private static final String SOURCE = "Hacker News";
+    private static final String SOURCE = "Hacker";
     private static final int FRONT_PAGE_SIZE = 100;
 
     private final RestClient restClient;

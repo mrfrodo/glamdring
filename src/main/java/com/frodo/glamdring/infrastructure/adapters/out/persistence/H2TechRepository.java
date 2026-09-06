@@ -25,7 +25,7 @@ public class H2TechRepository implements TechTrendRepositoryPort {
     @Override
     public void save(Tech trend) {
         jdbcClient.sql("""
-                MERGE INTO tech_trend (id, title, summary, topic, published_at, source)
+                MERGE INTO tech (id, title, summary, topic, published_at, source)
                 KEY (id)
                 VALUES (:id, :title, :summary, :topic, :publishedAt, :source)
                 """)
@@ -53,14 +53,14 @@ public class H2TechRepository implements TechTrendRepositoryPort {
 
     @Override
     public List<Tech> findAll() {
-        return jdbcClient.sql("SELECT * FROM tech_trend ORDER BY published_at DESC")
+        return jdbcClient.sql("SELECT * FROM tech ORDER BY published_at DESC")
                 .query(this::mapRow)
                 .list();
     }
 
     @Override
     public List<Tech> findTopNOrderedByPublishedAtDesc(int limit) {
-        return jdbcClient.sql("SELECT * FROM tech_trend ORDER BY published_at DESC LIMIT :limit")
+        return jdbcClient.sql("SELECT * FROM tech ORDER BY published_at DESC LIMIT :limit")
                 .param("limit", limit)
                 .query(this::mapRow)
                 .list();
@@ -68,7 +68,7 @@ public class H2TechRepository implements TechTrendRepositoryPort {
 
     @Override
     public boolean existsById(TechTrendId id) {
-        Integer count = jdbcClient.sql("SELECT COUNT(*) FROM tech_trend WHERE id = :id")
+        Integer count = jdbcClient.sql("SELECT COUNT(*) FROM tech WHERE id = :id")
                 .param("id", id.value())
                 .query(Integer.class)
                 .single();
@@ -77,7 +77,7 @@ public class H2TechRepository implements TechTrendRepositoryPort {
 
     @Override
     public void deleteAll() {
-        jdbcClient.sql("DELETE FROM tech_trend").update();
+        jdbcClient.sql("DELETE FROM tech").update();
     }
 
     private Tech mapRow(ResultSet rs, int rowNum) throws SQLException {

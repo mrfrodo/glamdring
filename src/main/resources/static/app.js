@@ -76,7 +76,7 @@ function fetchAndRenderTrends() {
                 <div class="trend-item">
                     <div class="trend-topic">${escapeHtml(t.topic)}</div>
                     <div class="trend-title">${escapeHtml(t.title)}</div>
-                    <div class="trend-meta">${escapeHtml(t.publishedAt)} · Bluesky</div>
+                    <div class="trend-meta">${escapeHtml(t.publishedAt)}</div>
                 </div>
             `).join('');
         })
