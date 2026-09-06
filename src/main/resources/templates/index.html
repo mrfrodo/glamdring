@@ -29,9 +29,9 @@
             Foe-hammer? Foe-hammer? The goblins know the sword of Gondolin!
         </p>
 
-        <p class="kill-tally" th:text="${killCount} + (${killCount} == 1 ? ' goblin of complexity slain so far' : ' goblins of complexity slain so far')"></p>
+        <p class="slay-tally" th:text="${slayCount} + (${slayCount} == 1 ? ' goblin of complexity slain so far' : ' goblins of complexity slain so far')"></p>
 
-        <a class="kills-link" th:href="@{/kills}">See the Kills Log &rarr;</a>
+        <a class="slays-link" th:href="@{/slays}">See the Slay Log &rarr;</a>
     </div>
 
 <div class="bottom-banner">
