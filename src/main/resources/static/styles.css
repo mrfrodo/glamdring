@@ -133,6 +133,13 @@ p.subtitle {
     margin-bottom: 1.5rem;
 }
 
+.kill-tally {
+    color: var(--accent-glow);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
 .kills-link {
     color: var(--accent-glow);
     text-decoration: none;
