@@ -1,0 +1,367 @@
+/* Glamdring.no — the page is a wall label beside the artifact.
+   The plate (glamdring.png) fills every screen; a scrim fades left to right
+   so the hilt and blade stay clear of the text. */
+
+:root {
+    --void: #05070C;
+    --ink: #0A0E16;
+    --steel: #C7D2DF;
+    --frost: #EDF3FA;
+    --gondolin: #8296AC;
+    --sapphire: #2E4E86;
+    --edge: rgba(199, 210, 223, 0.16);
+
+    --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --text: "Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+
+    --t-hero: clamp(2.6rem, 6.2vw, 5.75rem);
+    --t-lead: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
+    --t-rail: 0.8rem;
+
+    --inset: clamp(1.25rem, 6vw, 7rem);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: var(--void);
+    color: var(--steel);
+    font-family: var(--text);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* The plate, and the scrim that keeps text off the steel. */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+body::before {
+    background: url("/glamdring.png") center / cover no-repeat;
+    z-index: -2;
+}
+
+body::after {
+    background:
+        linear-gradient(to bottom, rgba(5, 7, 12, 0.92) 0%, rgba(5, 7, 12, 0) 14%,
+                                   rgba(5, 7, 12, 0) 84%, rgba(5, 7, 12, 0.92) 100%),
+        linear-gradient(100deg, rgba(5, 7, 12, 0.95) 0%, rgba(5, 7, 12, 0.9) 40%,
+                                rgba(5, 7, 12, 0.5) 66%, rgba(5, 7, 12, 0.12) 100%);
+    z-index: -1;
+}
+
+/* ---- rails ---------------------------------------------------------- */
+
+.rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding: 1rem var(--inset);
+    background: linear-gradient(to bottom, rgba(10, 14, 22, 0.82), rgba(10, 14, 22, 0.62));
+    backdrop-filter: blur(2px);
+}
+
+.rail-top {
+    border-bottom: 1px solid var(--edge);
+}
+
+.rail-bottom {
+    border-top: 1px solid var(--edge);
+    background: linear-gradient(to top, rgba(10, 14, 22, 0.82), rgba(10, 14, 22, 0.62));
+}
+
+.wordmark {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.09em;
+    color: var(--frost);
+    text-decoration: none;
+}
+
+.rail-note {
+    margin: 0;
+    font-size: var(--t-rail);
+    letter-spacing: 0.05em;
+    color: var(--gondolin);
+}
+
+.rail-note-quiet {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: rgba(130, 150, 172, 0.72);
+}
+
+/* ---- the label ------------------------------------------------------ */
+
+.label {
+    align-self: center;
+    max-width: 46rem;
+    margin: clamp(2.5rem, 8vh, 6rem) 0;
+    padding: 0.35rem 0 0.35rem clamp(1rem, 2.5vw, 2.25rem);
+    margin-left: var(--inset);
+    border-left: 1px solid var(--edge);
+}
+
+.hero-wrap {
+    position: relative;
+}
+
+.hero {
+    margin: 0;
+    max-width: 16ch;
+    font-family: var(--display);
+    font-size: var(--t-hero);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: 0.005em;
+    color: var(--frost);
+}
+
+/* One moment of motion: light crossing steel, once. */
+.sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(104deg,
+        rgba(237, 243, 250, 0) 38%,
+        rgba(237, 243, 250, 0.42) 49%,
+        rgba(237, 243, 250, 0) 60%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+    animation: sweep 2.6s cubic-bezier(0.33, 0, 0.2, 1) 0.45s 1 forwards;
+}
+
+@keyframes sweep {
+    0% { transform: translateX(-115%); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translateX(115%); opacity: 0; }
+}
+
+.lead {
+    max-width: 54ch;
+    margin: 2rem 0 0;
+    font-size: var(--t-lead);
+    color: var(--steel);
+}
+
+.tally {
+    margin: 2.25rem 0 0;
+    font-size: var(--t-lead);
+    color: var(--gondolin);
+}
+
+.tally-count {
+    font-family: var(--display);
+    font-size: 2.4em;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--frost);
+    margin-right: 0.12em;
+}
+
+.cta {
+    margin: 1.75rem 0 0;
+}
+
+.cta a {
+    color: var(--frost);
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--sapphire);
+    transition: border-color 160ms ease;
+}
+
+.cta a:hover,
+.cta a:focus-visible {
+    border-bottom-color: var(--frost);
+}
+
+/* ---- the log -------------------------------------------------------- */
+
+/* Long-form reading: the plate recedes, still present but far off. */
+body.reading::after {
+    background:
+        linear-gradient(to bottom, rgba(5, 7, 12, 0.94) 0%, rgba(5, 7, 12, 0.84) 18%,
+                                   rgba(5, 7, 12, 0.84) 82%, rgba(5, 7, 12, 0.94) 100%),
+        linear-gradient(100deg, rgba(5, 7, 12, 0.9) 0%, rgba(5, 7, 12, 0.72) 60%, rgba(5, 7, 12, 0.55) 100%);
+}
+
+.log {
+    width: 100%;
+    max-width: 62rem;
+    margin: clamp(2rem, 6vh, 4.5rem) auto;
+    padding: 0 var(--inset);
+}
+
+.back {
+    margin: 0 0 clamp(2.5rem, 6vh, 4rem);
+    font-size: var(--t-rail);
+    letter-spacing: 0.05em;
+}
+
+.back a {
+    color: var(--gondolin);
+    text-decoration: none;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid transparent;
+    transition: color 160ms ease, border-color 160ms ease;
+}
+
+.back a:hover,
+.back a:focus-visible {
+    color: var(--frost);
+    border-bottom-color: var(--sapphire);
+}
+
+.log-title {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    color: var(--frost);
+}
+
+.log-lead {
+    max-width: 58ch;
+    margin: 1.25rem 0 0;
+    font-size: var(--t-lead);
+    color: var(--gondolin);
+}
+
+.slay {
+    margin-top: clamp(2.75rem, 6vh, 4rem);
+    padding-top: clamp(2rem, 4vh, 2.75rem);
+    border-top: 1px solid var(--edge);
+}
+
+.slay-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.35rem 2rem;
+    font-size: var(--t-rail);
+    letter-spacing: 0.05em;
+    color: var(--gondolin);
+}
+
+.slay-title {
+    margin: 0.85rem 0 2rem;
+    max-width: 20ch;
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 3.4vw, 2.75rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--frost);
+}
+
+/* Labels hang in the margin; the rule between them is the blade's edge. */
+.field {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.field-label {
+    margin: 0;
+    text-align: right;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--gondolin);
+}
+
+.field-body {
+    margin: 0;
+    max-width: 62ch;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--edge);
+}
+
+.field-lesson {
+    color: var(--frost);
+}
+
+.log-empty {
+    margin-top: clamp(2.75rem, 6vh, 4rem);
+    padding-top: clamp(2rem, 4vh, 2.75rem);
+    border-top: 1px solid var(--edge);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--gondolin);
+}
+
+/* ---- floor ---------------------------------------------------------- */
+
+a:focus-visible,
+.wordmark:focus-visible {
+    outline: 2px solid var(--steel);
+    outline-offset: 4px;
+    border-radius: 1px;
+}
+
+@media (max-width: 720px) {
+    .label {
+        margin-right: var(--inset);
+    }
+
+    /* The plate reads poorly at phone crops — veil it evenly. */
+    body::after,
+    body.reading::after {
+        background: linear-gradient(to bottom, rgba(5, 7, 12, 0.95), rgba(5, 7, 12, 0.86) 45%, rgba(5, 7, 12, 0.95));
+    }
+
+    .rail {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* No margin left to hang labels in — they sit above their text. */
+    .field {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+    }
+
+    .field-label {
+        text-align: left;
+    }
+
+    .field-body {
+        padding-left: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sheen {
+        animation: none;
+    }
+
+    * {
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Slay Log — Glamdring.no</title>
+    <meta name="description" content="A running log of real domain complexity found and slain — before and after case studies from software built with DDD and hexagonal architecture.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="reading">
+
+<header class="rail rail-top">
+    <a class="wordmark" th:href="@{/}">Glamdring.no</a>
+    <p class="rail-note">Slay domain complexity</p>
+</header>
+
+<main class="log">
+    <p class="back"><a th:href="@{/}">Back to Glamdring</a></p>
+
+    <h1 class="log-title">The Slay Log</h1>
+    <p class="log-lead">
+        One entry for every piece of complexity found and cut out of real code:
+        what it smelled like, what replaced it, and what it left behind worth keeping.
+    </p>
+
+    <article th:each="slay : ${slays}" class="slay">
+        <div class="slay-meta">
+            <span th:text="${slay.topic.searchTerm}">hexagonal architecture</span>
+            <span th:text="${#temporals.format(slay.slainOn, 'MMM dd, yyyy')}">Sep 05, 2026</span>
+        </div>
+
+        <h2 class="slay-title" th:text="${slay.title}">The Blocking Reactor</h2>
+
+        <div class="field">
+            <p class="field-label">The smell</p>
+            <p class="field-body" th:text="${slay.smell}"></p>
+        </div>
+        <div class="field">
+            <p class="field-label">The slay</p>
+            <p class="field-body" th:text="${slay.theSlay}"></p>
+        </div>
+        <div class="field">
+            <p class="field-label">The lesson</p>
+            <p class="field-body field-lesson" th:text="${slay.lesson}"></p>
+        </div>
+    </article>
+
+    <p th:if="${#lists.isEmpty(slays)}" class="log-empty">No entries yet. The hunt is young.</p>
+</main>
+
+<footer class="rail rail-bottom">
+    <p class="rail-note">Forged in Gondolin, First Age</p>
+    <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear</p>
+</footer>
+
+</body>
+</html>

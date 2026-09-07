@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamdring.no — Developer Portal for Software Engineering, DDD &amp; Hexagonal Architecture</title>
+    <meta name="description" content="Glamdring.no — a developer portal for programmers learning software engineering fundamentals, Domain-Driven Design, and Hexagonal Architecture.">
+    <meta name="keywords" content="developer portal, software engineering fundamentals, domain driven design, hexagonal architecture, programming, DDD, ports and adapters">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<header class="rail rail-top">
+    <a class="wordmark" th:href="@{/}">Glamdring.no</a>
+    <p class="rail-note">Slay domain complexity</p>
+</header>
+
+<main class="label">
+    <div class="hero-wrap">
+        <h1 class="hero">Foe-hammer? The goblins know the sword of Gondolin.</h1>
+        <span class="sheen" aria-hidden="true"></span>
+    </div>
+
+    <p class="lead">
+        Turgon of Gondolin carried it first, and Gandalf found it centuries later in a
+        troll-hoard. Here it is pointed at a different foe: the accidental complexity that
+        creeps into a domain model while nobody is watching.
+    </p>
+
+    <p class="tally">
+        <span class="tally-count" th:text="${slayCount}">0</span>
+        <span th:text="${slayCount == 1} ? 'goblin of complexity slain so far.' : 'goblins of complexity slain so far.'">goblins of complexity slain so far.</span>
+    </p>
+
+    <p class="cta"><a th:href="@{/slays}">Read the Slay Log</a></p>
+</main>
+
+<footer class="rail rail-bottom">
+    <p class="rail-note">Forged in Gondolin, First Age</p>
+    <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear</p>
+</footer>
+
+</body>
+</html>
