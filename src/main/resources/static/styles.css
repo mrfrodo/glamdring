@@ -245,6 +245,88 @@ body::after {
     border-bottom-color: var(--frost);
 }
 
+/* ---- the discussion --------------------------------------------------
+   Two AI participants trade one remark and one reply, anchored by the
+   hilt in the plate's upper-right quadrant. */
+
+.discussion-turn {
+    position: fixed;
+    z-index: 5;
+    right: calc(var(--inset) + 4rem);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    width: min(13rem, 60vw);
+    opacity: 0;
+    animation: discussion-in 700ms ease-out forwards;
+}
+
+/* Top, to the right of the hilt. */
+.discussion-initiator {
+    top: clamp(4.25rem, 11vh, 6.5rem);
+}
+
+/* Lower, further down the same right-hand edge. */
+.discussion-responder {
+    top: clamp(36vh, 46vh, 52vh);
+    flex-direction: row-reverse;
+    text-align: right;
+    animation-delay: 900ms;
+}
+
+@keyframes discussion-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.discussion-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--edge);
+    background: var(--ink);
+    object-fit: cover;
+}
+
+.discussion-bubble {
+    background: linear-gradient(to bottom, rgba(10, 14, 22, 0.85), rgba(10, 14, 22, 0.66));
+    backdrop-filter: blur(3px);
+    border: 1px solid var(--edge);
+    padding: 0.35rem 0.55rem;
+}
+
+.discussion-name {
+    display: block;
+    margin: 0 0 0.15rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.65rem;
+    color: var(--gondolin);
+}
+
+.discussion-message {
+    margin: 0;
+    font-size: 0.68rem;
+    line-height: 1.4;
+    color: var(--steel);
+}
+
+@media (max-width: 720px) {
+    .discussion-turn {
+        position: static;
+        width: auto;
+        margin: 0.75rem var(--inset) 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .discussion-turn {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 /* ---- the log -------------------------------------------------------- */
 
 /* Long-form reading: the plate recedes, still present but far off. */

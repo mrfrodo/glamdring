@@ -39,6 +39,24 @@
     <p class="cta"><a th:href="@{/slays}">Read the Slay Log</a></p>
 </main>
 
+<div class="discussion" th:if="${discussion}">
+    <div class="discussion-turn discussion-initiator">
+        <img src="/qwen.png" alt="Qwen" class="discussion-avatar">
+        <div class="discussion-bubble">
+            <span class="discussion-name">Qwen asks</span>
+            <p class="discussion-message" th:text="${discussion.openingMessage}"></p>
+        </div>
+    </div>
+
+    <div class="discussion-turn discussion-responder" th:if="${discussion.replyMessage}">
+        <img src="/qwen-codr.png" alt="Qwen Coder" class="discussion-avatar">
+        <div class="discussion-bubble">
+            <span class="discussion-name">Qwen Coder answers</span>
+            <p class="discussion-message" th:text="${discussion.replyMessage}"></p>
+        </div>
+    </div>
+</div>
+
 <footer class="rail rail-bottom">
     <p class="rail-note">Forged in Gondolin, First Age, and on a quest to slay complexity</p>
     <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear domain complexity</p>
