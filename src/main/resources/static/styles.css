@@ -9,12 +9,13 @@
     --frost: #EDF3FA;
     --gondolin: #8296AC;
     --sapphire: #2E4E86;
+    --sapphire-light: #7FA8E8;
     --edge: rgba(199, 210, 223, 0.16);
 
     --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     --text: "Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
 
-    --t-hero: clamp(2.6rem, 6.2vw, 5.75rem);
+    --t-hero: clamp(2.2rem, 5.5vw, 5.00rem);
     --t-lead: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
     --t-rail: 0.8rem;
 
@@ -51,9 +52,19 @@ body::after {
     pointer-events: none;
 }
 
+/* `contain` shows the whole plate — the wordmark and the blade's inscription
+   survive. The void around it is sampled from the plate's own ground, so the
+   seam does not read as letterboxing. Portrait phones get `cover` instead:
+   contained, the sword would shrink to a strip. */
 body::before {
-    background: url("/glamdring.png") center / cover no-repeat;
+    background: url("/glamdring2.png") center / contain no-repeat;
     z-index: -2;
+}
+
+@media (max-aspect-ratio: 3 / 4) {
+    body::before {
+        background-size: cover;
+    }
 }
 
 body::after {
@@ -165,10 +176,47 @@ body::after {
     color: var(--steel);
 }
 
+/* Sting's trick: it lights up blue when the enemy is close. */
+.quarry {
+    font-family: var(--display);
+    font-style: italic;
+    color: #BFE4FF;
+    text-shadow:
+        0 0 6px rgba(102, 200, 255, 0.85),
+        0 0 16px rgba(70, 170, 255, 0.65),
+        0 0 32px rgba(50, 140, 255, 0.4);
+    animation: sting-glow 3.4s ease-in-out infinite;
+}
+
+@keyframes sting-glow {
+    0%, 100% {
+        text-shadow:
+            0 0 6px rgba(102, 200, 255, 0.85),
+            0 0 16px rgba(70, 170, 255, 0.65),
+            0 0 32px rgba(50, 140, 255, 0.4);
+    }
+    50% {
+        text-shadow:
+            0 0 10px rgba(102, 200, 255, 1),
+            0 0 26px rgba(70, 170, 255, 0.85),
+            0 0 48px rgba(50, 140, 255, 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quarry {
+        animation: none;
+    }
+}
+
 .tally {
     margin: 2.25rem 0 0;
     font-size: var(--t-lead);
     color: var(--gondolin);
+}
+
+.tally-label {
+    color: var(--frost);
 }
 
 .tally-count {

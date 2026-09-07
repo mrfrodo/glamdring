@@ -14,8 +14,8 @@
 <body>
 
 <header class="rail rail-top">
-    <a class="wordmark" th:href="@{/}">Glamdring.no</a>
-    <p class="rail-note">Slay domain complexity</p>
+    <a class="wordmark" th:href="@{/}">Software architecture - domain-driven - from programmer to programmer</a>
+    <p class="rail-note">Slay domain complexity with domain-driven design</p>
 </header>
 
 <main class="label">
@@ -26,21 +26,22 @@
 
     <p class="lead">
         Turgon of Gondolin carried it first, and Gandalf found it centuries later in a
-        troll-hoard. Here it is pointed at a different foe: the accidental complexity that
-        creeps into a domain model while nobody is watching.
+        troll-hoard. Here it is pointed at a different foe:<br>
+        <em class="quarry">The accidental complexity that
+        creeps into a domain model while nobody is watching</em>.
     </p>
 
     <p class="tally">
         <span class="tally-count" th:text="${slayCount}">0</span>
-        <span th:text="${slayCount == 1} ? 'goblin of complexity slain so far.' : 'goblins of complexity slain so far.'">goblins of complexity slain so far.</span>
+        <span class="tally-label" th:text="${slayCount == 1} ? 'goblin of complexity slain so far' : 'goblins of complexity slain so far'">goblins of complexity slain so far</span>
     </p>
 
     <p class="cta"><a th:href="@{/slays}">Read the Slay Log</a></p>
 </main>
 
 <footer class="rail rail-bottom">
-    <p class="rail-note">Forged in Gondolin, First Age</p>
-    <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear</p>
+    <p class="rail-note">Forged in Gondolin, First Age, and on a quest to slay complexity</p>
+    <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear domain complexity</p>
 </footer>
 
 </body>
