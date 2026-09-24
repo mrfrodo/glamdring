@@ -3,8 +3,8 @@ package com.frodo.glamdring;
 import com.frodo.glamdring.application.applicationservices.DiscussionApplicationService;
 import com.frodo.glamdring.application.applicationservices.TipOfTheDayApplicationService;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(excludeName = {
@@ -14,7 +14,13 @@ import org.springframework.context.annotation.Bean;
 public class Glamdring {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Glamdring.class, args);
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(Glamdring.class);
+		if ("PRODp".equalsIgnoreCase(System.getenv("ENVIRONMENT"))) {
+			// Activating "prod" makes Spring Boot layer application-prod.properties
+			// on top of application.properties, rather than replacing it.
+			builder.profiles("prod");
+		}
+		builder.run(args);
 	}
 
 	/**
