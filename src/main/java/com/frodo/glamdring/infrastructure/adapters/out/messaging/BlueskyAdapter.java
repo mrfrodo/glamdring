@@ -3,7 +3,7 @@ package com.frodo.glamdring.infrastructure.adapters.out.messaging;
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
 import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
-import com.frodo.glamdring.domain.models.TechTrendId;
+import com.frodo.glamdring.domain.models.TechId;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -61,7 +61,7 @@ public class BlueskyAdapter implements ExternalTechFeedPort {
         Instant publishedAt = parseInstant(post.record().createdAt());
 
         return Tech.builder()
-                .id(new TechTrendId(id))
+                .id(new TechId(id))
                 .title(title)
                 .summary(summary)
                 .topic(topic)

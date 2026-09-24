@@ -1,24 +1,24 @@
 package com.frodo.glamdring.application.ports.out;
 
 import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechTrendId;
+import com.frodo.glamdring.domain.models.TechId;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface TechTrendRepositoryPort {
+public interface TechRepositoryPort {
 
     void save(Tech trend);
 
     void saveAll(List<Tech> trends);
 
-    Optional<Tech> findById(TechTrendId id);
+    Optional<Tech> findById(TechId id);
 
     List<Tech> findAll();
 
     List<Tech> findTopNOrderedByPublishedAtDesc(int limit);
 
-    boolean existsById(TechTrendId id);
+    boolean existsById(TechId id);
 
     void deleteAll();
 }

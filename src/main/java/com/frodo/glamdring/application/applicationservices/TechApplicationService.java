@@ -2,8 +2,8 @@ package com.frodo.glamdring.application.applicationservices;
 
 import com.frodo.glamdring.application.ports.in.GetTechUseCase;
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
-import com.frodo.glamdring.application.ports.out.TechTrendRepositoryPort;
-import com.frodo.glamdring.domain.domainservices.TechTrendDomainService;
+import com.frodo.glamdring.application.ports.out.TechRepositoryPort;
+import com.frodo.glamdring.domain.domainservices.TechDomainService;
 import com.frodo.glamdring.domain.models.Tech;
 import com.frodo.glamdring.domain.models.TechTopic;
 import org.springframework.stereotype.Service;
@@ -22,16 +22,16 @@ public class TechApplicationService implements GetTechUseCase {
     private static final int FETCH_PER_TOPIC = 3;
 
     private final ExternalTechFeedPort externalTechFeedPort;
-    private final TechTrendRepositoryPort techTrendRepositoryPort;
-    private final TechTrendDomainService techTrendDomainService;
+    private final TechRepositoryPort techRepositoryPort;
+    private final TechDomainService techDomainService;
 
     public TechApplicationService(
             ExternalTechFeedPort externalTechFeedPort,
-            TechTrendRepositoryPort techTrendRepositoryPort,
-            TechTrendDomainService techTrendDomainService) {
+            TechRepositoryPort techRepositoryPort,
+            TechDomainService techDomainService) {
         this.externalTechFeedPort = externalTechFeedPort;
-        this.techTrendRepositoryPort = techTrendRepositoryPort;
-        this.techTrendDomainService = techTrendDomainService;
+        this.techRepositoryPort = techRepositoryPort;
+        this.techDomainService = techDomainService;
     }
 
     /**
@@ -39,8 +39,8 @@ public class TechApplicationService implements GetTechUseCase {
      */
     @Override
     public List<Tech> getTopTrends(int limit) {
-        List<Tech> all = techTrendRepositoryPort.findAll();
-        return techTrendDomainService.selectTopTrends(all, limit);
+        List<Tech> all = techRepositoryPort.findAll();
+        return techDomainService.selectTopTrends(all, limit);
     }
 
     /**
@@ -52,9 +52,9 @@ public class TechApplicationService implements GetTechUseCase {
         for (TechTopic topic : TechTopic.values()) {
             List<Tech> fetched = externalTechFeedPort.fetchByTopic(topic, FETCH_PER_TOPIC);
             fetched.stream()
-                    .filter(t -> !techTrendRepositoryPort.existsById(t.getId()))
+                    .filter(t -> !techRepositoryPort.existsById(t.getId()))
                     .forEach(fresh::add);
         }
-        techTrendRepositoryPort.saveAll(fresh);
+        techRepositoryPort.saveAll(fresh);
     }
 }

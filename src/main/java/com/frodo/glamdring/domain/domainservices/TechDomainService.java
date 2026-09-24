@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 
-public class TechTrendDomainService {
+public class TechDomainService {
 
     public List<Tech> selectTopTrends(List<Tech> candidates, int limit) {
         return candidates.stream()

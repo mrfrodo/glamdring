@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
  * Infrastructure concern — delegates entirely to the application service.
  */
 @Component
-public class TechTrendScheduler {
+public class TechScheduler {
 
     private final TechApplicationService techApplicationService;
 
-    public TechTrendScheduler(TechApplicationService techApplicationService) {
+    public TechScheduler(TechApplicationService techApplicationService) {
         this.techApplicationService = techApplicationService;
     }
 

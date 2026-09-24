@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class Tech {
 
-    private final TechTrendId id;
+    private final TechId id;
     private final String title;
     private final String summary;
     private final TechTopic topic;
@@ -31,7 +31,7 @@ public class Tech {
         return new Builder();
     }
 
-    public TechTrendId getId() { return id; }
+    public TechId getId() { return id; }
     public String getTitle() { return title; }
     public String getSummary() { return summary; }
     public TechTopic getTopic() { return topic; }
@@ -64,16 +64,16 @@ public class Tech {
     }
 
     public static class Builder {
-        private TechTrendId id;
+        private TechId id;
         private String title;
         private String summary;
         private TechTopic topic;
         private Instant publishedAt;
         private String source;
 
-        public Builder id(TechTrendId id) { this.id = id; return this; }
-        public Builder id(String id) { this.id = new TechTrendId(id); return this; }
-        public Builder id(UUID id) { this.id = new TechTrendId(id.toString()); return this; }
+        public Builder id(TechId id) { this.id = id; return this; }
+        public Builder id(String id) { this.id = new TechId(id); return this; }
+        public Builder id(UUID id) { this.id = new TechId(id.toString()); return this; }
         public Builder title(String title) { this.title = title; return this; }
         public Builder summary(String summary) { this.summary = summary; return this; }
         public Builder topic(TechTopic topic) { this.topic = topic; return this; }

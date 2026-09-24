@@ -1,6 +1,6 @@
 package com.frodo.glamdring.infrastructure.config;
 
-import com.frodo.glamdring.domain.domainservices.TechTrendDomainService;
+import com.frodo.glamdring.domain.domainservices.TechDomainService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,8 +15,8 @@ import org.springframework.web.client.RestClient;
 public class AppConfig {
 
     @Bean
-    public TechTrendDomainService techTrendDomainService() {
-        return new TechTrendDomainService();
+    public TechDomainService techTrendDomainService() {
+        return new TechDomainService();
     }
 
     @Bean

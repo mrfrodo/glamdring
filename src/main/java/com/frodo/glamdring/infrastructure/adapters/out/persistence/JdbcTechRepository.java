@@ -1,8 +1,8 @@
 package com.frodo.glamdring.infrastructure.adapters.out.persistence;
 
-import com.frodo.glamdring.application.ports.out.TechTrendRepositoryPort;
+import com.frodo.glamdring.application.ports.out.TechRepositoryPort;
 import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechTrendId;
+import com.frodo.glamdring.domain.models.TechId;
 import com.frodo.glamdring.domain.models.TechTopic;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
@@ -14,20 +14,31 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class H2TechRepository implements TechTrendRepositoryPort {
+public class JdbcTechRepository implements TechRepositoryPort {
 
     private final JdbcClient jdbcClient;
 
-    public H2TechRepository(JdbcClient jdbcClient) {
+    public JdbcTechRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
     @Override
     public void save(Tech trend) {
         jdbcClient.sql("""
-                MERGE INTO tech (id, title, summary, topic, published_at, source)
-                KEY (id)
-                VALUES (:id, :title, :summary, :topic, :publishedAt, :source)
+                MERGE INTO tech AS t
+                USING (VALUES (CAST(:id AS VARCHAR(255)), CAST(:title AS VARCHAR(512)),
+                               CAST(:summary AS VARCHAR(2048)), CAST(:topic AS VARCHAR(64)),
+                               CAST(:publishedAt AS VARCHAR(64)), CAST(:source AS VARCHAR(128))))
+                    AS s (id, title, summary, topic, published_at, source)
+                ON t.id = s.id
+                WHEN MATCHED THEN UPDATE SET
+                    title = s.title,
+                    summary = s.summary,
+                    topic = s.topic,
+                    published_at = s.published_at,
+                    source = s.source
+                WHEN NOT MATCHED THEN INSERT (id, title, summary, topic, published_at, source)
+                    VALUES (s.id, s.title, s.summary, s.topic, s.published_at, s.source)
                 """)
                 .param("id", trend.getId().value())
                 .param("title", trend.getTitle())
@@ -44,8 +55,8 @@ public class H2TechRepository implements TechTrendRepositoryPort {
     }
 
     @Override
-    public Optional<Tech> findById(TechTrendId id) {
-        return jdbcClient.sql("SELECT * FROM tech_trend WHERE id = :id")
+    public Optional<Tech> findById(TechId id) {
+        return jdbcClient.sql("SELECT * FROM tech WHERE id = :id")
                 .param("id", id.value())
                 .query(this::mapRow)
                 .optional();
@@ -67,7 +78,7 @@ public class H2TechRepository implements TechTrendRepositoryPort {
     }
 
     @Override
-    public boolean existsById(TechTrendId id) {
+    public boolean existsById(TechId id) {
         Integer count = jdbcClient.sql("SELECT COUNT(*) FROM tech WHERE id = :id")
                 .param("id", id.value())
                 .query(Integer.class)
