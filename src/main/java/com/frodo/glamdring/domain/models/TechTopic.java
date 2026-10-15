@@ -7,6 +7,7 @@ package com.frodo.glamdring.domain.models;
 public enum TechTopic {
 
     SOFTWARE_ENGINEERING("software engineering"),
+    SOLID("solid principles"),
     DOMAIN_DRIVEN_DESIGN("domain driven design"),
     HEXAGONAL_ARCHITECTURE("hexagonal architecture"),
     MICROSERVICES("microservices"),

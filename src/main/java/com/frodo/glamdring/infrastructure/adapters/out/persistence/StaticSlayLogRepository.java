@@ -21,8 +21,8 @@ public class StaticSlayLogRepository implements SlayLogRepositoryPort {
 
             Slay.builder()
                     .id("switch-statement-spell")
-                    .title("The Spell That Needed a Rewrite")
-                    .topic(TechTopic.SOFTWARE_ENGINEERING)
+                    .title("The Spell That Needed a Rewrite (the one that violates O in solid)")
+                    .topic(TechTopic.SOLID)
                     .smell("SpellCaster.cast(String type) was one giant switch: case \"fireball\", "
                             + "case \"frost\", case \"heal\". Every new spell meant opening the same "
                             + "method, adding a branch, and hoping the other branches still worked. "
@@ -178,8 +178,8 @@ public class StaticSlayLogRepository implements SlayLogRepositoryPort {
 
             Slay.builder()
                     .id("swiss-army-port")
-                    .title("The Port That Did Everything")
-                    .topic(TechTopic.SOFTWARE_ENGINEERING)
+                    .title("The Port That Did Everything (the one that violates I in solid)")
+                    .topic(TechTopic.SOLID)
                     .smell("One CharacterPort interface with fourteen methods: loadCharacter(), "
                             + "saveCharacter(), deleteCharacter(), searchByGuild(), listLeaderboard(), "
                             + "exportToJson() and friends. The inventory screen only needed to load a "
@@ -195,6 +195,147 @@ public class StaticSlayLogRepository implements SlayLogRepositoryPort {
                             + "interface is a promise made to every caller about things only some of "
                             + "them care about. Shape the interface to the consumer, not to the "
                             + "implementer, and one class is still free to implement many small ports.")
+                    .smellExample("""
+                            public interface CharacterPort {
+                                Character loadCharacter(CharacterId id);
+                                void saveCharacter(Character character);
+                                void deleteCharacter(CharacterId id);
+                                List<Character> searchByGuild(GuildId guildId);
+                                List<Character> listLeaderboard(int top);
+                                String exportToJson(CharacterId id);
+                                // ...eight more methods
+                            }
+
+                            public class InventoryService {
+
+                                private final CharacterPort characters;
+
+                                public InventoryService(CharacterPort characters) {
+                                    this.characters = characters;
+                                }
+
+                                public List<Item> itemsOf(CharacterId id) {
+                                    // the ONLY thing this class ever calls:
+                                    return characters.loadCharacter(id).items();
+                                }
+                            }
+
+                            // In the test: fourteen methods to stub, one of them used.
+                            class FakeCharacterPort implements CharacterPort {
+                                public Character loadCharacter(CharacterId id) { return aCharacter(); }
+                                public void saveCharacter(Character c) { throw new UnsupportedOperationException(); }
+                                public void deleteCharacter(CharacterId id) { throw new UnsupportedOperationException(); }
+                                // ...eleven more that throw
+                            }
+                            """)
+                    .slayExample("""
+                            public interface LoadCharacterPort {
+                                Character loadCharacter(CharacterId id);
+                            }
+
+                            public interface SaveCharacterPort {
+                                void saveCharacter(Character character);
+                            }
+
+                            public interface LeaderboardQueryPort {
+                                List<Character> listLeaderboard(int top);
+                            }
+
+                            // The adapter still does it all - it just promises each client less.
+                            @Component
+                            public class CharacterPersistenceAdapter
+                                    implements LoadCharacterPort, SaveCharacterPort, LeaderboardQueryPort {
+                                // ...one class, one database, three small contracts
+                            }
+
+                            public class InventoryService {
+
+                                private final LoadCharacterPort characters;   // exactly what it needs
+
+                                public InventoryService(LoadCharacterPort characters) {
+                                    this.characters = characters;
+                                }
+                            }
+
+                            // The test double is now a lambda:
+                            LoadCharacterPort fake = id -> aCharacter();
+                            """)
+                    .lessonExplanation("""
+                            Interface Segregation says: no client should be forced to depend on methods it does not use. Look at it from the caller's side, not the implementer's.
+
+                            In hexagonal architecture a port is the contract between a use case and the outside world. If one port serves every use case, each use case silently depends on everything the port can do. Change the leaderboard and the inventory screen is recompiled and retested for no reason.
+
+                            What it costs: more interfaces, and you have to decide where to cut. The adapter stays one class that implements several ports, so you do not get more infrastructure, only more names.
+
+                            What you get back: a service declares precisely what it needs, test doubles shrink from fourteen stubs to one lambda, and a change to one capability cannot ripple into services that never used it. Reads can even be split from writes, which is the first step towards CQRS.
+
+                            When not to do it: a port with three cohesive methods that every client uses together is fine. Split when different clients use different slices, not by default.
+                            """)
+                    .demo("An inventory service, a save-game service and a leaderboard page each depend "
+                            + "on exactly one small port, and are tested with a one-line fake.",
+                            """
+                            // --- Three clients, three different needs ----------------------------
+                            public class InventoryService {
+                                private final LoadCharacterPort characters;
+
+                                public InventoryService(LoadCharacterPort characters) {
+                                    this.characters = characters;
+                                }
+
+                                public List<Item> itemsOf(CharacterId id) {
+                                    return characters.loadCharacter(id).items();
+                                }
+                            }
+
+                            public class LevelUpService {
+                                private final LoadCharacterPort load;
+                                private final SaveCharacterPort save;
+
+                                public LevelUpService(LoadCharacterPort load, SaveCharacterPort save) {
+                                    this.load = load;
+                                    this.save = save;
+                                }
+
+                                public void levelUp(CharacterId id) {
+                                    Character hero = load.loadCharacter(id);
+                                    hero.levelUp();
+                                    save.saveCharacter(hero);
+                                }
+                            }
+
+                            public class LeaderboardPage {
+                                private final LeaderboardQueryPort leaderboard;
+
+                                public LeaderboardPage(LeaderboardQueryPort leaderboard) {
+                                    this.leaderboard = leaderboard;
+                                }
+
+                                public List<Character> top10() {
+                                    return leaderboard.listLeaderboard(10);
+                                }
+                            }
+
+                            // --- Wiring: Spring injects the SAME adapter into all three ------------
+                            // CharacterPersistenceAdapter implements all three ports, so each
+                            // constructor simply receives the adapter as the slice it asked for.
+
+                            // --- Tests: only what the class under test uses ------------------------
+                            @Test
+                            void listsItemsOfACharacter() {
+                                LoadCharacterPort fake = id -> aCharacterWith(sword(), shield());
+
+                                var items = new InventoryService(fake).itemsOf(anId());
+
+                                assertEquals(2, items.size());
+                            }
+
+                            // --- Later: add a new capability --------------------------------------
+                            public interface ExportCharacterPort {
+                                String exportToJson(CharacterId id);
+                            }
+                            // The adapter adds `implements ExportCharacterPort`. InventoryService,
+                            // LevelUpService and LeaderboardPage never notice.
+                            """)
                     .slainOn(2026, 10, 15)
                     .build(),
 
