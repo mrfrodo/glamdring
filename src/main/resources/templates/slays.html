@@ -36,15 +36,66 @@
 
         <div class="field">
             <p class="field-label">The smell</p>
-            <p class="field-body" th:text="${slay.smell}"></p>
+            <p th:if="${!slay.hasSmellExample()}" class="field-body" th:text="${slay.smell}"></p>
+            <button th:if="${slay.hasSmellExample()}" type="button"
+                    class="field-body example-trigger" th:text="${slay.smell}"
+                    th:attr="data-dialog='smell-' + ${slay.id}"
+                    aria-haspopup="dialog"></button>
+            <dialog th:if="${slay.hasSmellExample()}" th:id="'smell-' + ${slay.id}" class="example-dialog"
+                    th:attr="aria-label='Code example: ' + ${slay.title}">
+                <div class="example-head">
+                    <span>The smell, in Java</span>
+                    <button type="button" class="example-close" aria-label="Close example">Close</button>
+                </div>
+                <pre class="example-code"><code th:text="${slay.smellExample}"></code></pre>
+            </dialog>
         </div>
         <div class="field">
             <p class="field-label">The slay</p>
-            <p class="field-body" th:text="${slay.theSlay}"></p>
+            <p th:if="${!slay.hasSlayExample()}" class="field-body" th:text="${slay.theSlay}"></p>
+            <button th:if="${slay.hasSlayExample()}" type="button"
+                    class="field-body example-trigger" th:text="${slay.theSlay}"
+                    th:attr="data-dialog='slay-' + ${slay.id}"
+                    aria-haspopup="dialog"></button>
+            <dialog th:if="${slay.hasSlayExample()}" th:id="'slay-' + ${slay.id}" class="example-dialog"
+                    th:attr="aria-label='Code example: ' + ${slay.title}">
+                <div class="example-head">
+                    <span>The slay, in Java</span>
+                    <button type="button" class="example-close" aria-label="Close example">Close</button>
+                </div>
+                <pre class="example-code"><code th:text="${slay.slayExample}"></code></pre>
+            </dialog>
         </div>
         <div class="field">
             <p class="field-label">The lesson</p>
-            <p class="field-body field-lesson" th:text="${slay.lesson}"></p>
+            <p th:if="${!slay.hasLessonExplanation()}" class="field-body field-lesson" th:text="${slay.lesson}"></p>
+            <button th:if="${slay.hasLessonExplanation()}" type="button"
+                    class="field-body field-lesson example-trigger explain-trigger" th:text="${slay.lesson}"
+                    th:attr="data-dialog='lesson-' + ${slay.id}"
+                    aria-haspopup="dialog"></button>
+            <dialog th:if="${slay.hasLessonExplanation()}" th:id="'lesson-' + ${slay.id}" class="example-dialog"
+                    th:attr="aria-label='Lesson explained: ' + ${slay.title}">
+                <div class="example-head">
+                    <span>The lesson, explained</span>
+                    <button type="button" class="example-close" aria-label="Close explanation">Close</button>
+                </div>
+                <p class="explanation" th:text="${slay.lessonExplanation}"></p>
+            </dialog>
+        </div>
+        <div class="field" th:if="${slay.hasDemo()}">
+            <p class="field-label">In action</p>
+            <button type="button" class="field-body example-trigger"
+                    th:text="${slay.demo.summary}"
+                    th:attr="data-dialog='demo-' + ${slay.id}"
+                    aria-haspopup="dialog"></button>
+            <dialog th:id="'demo-' + ${slay.id}" class="example-dialog"
+                    th:attr="aria-label='Worked example: ' + ${slay.title}">
+                <div class="example-head">
+                    <span>In action, in Java</span>
+                    <button type="button" class="example-close" aria-label="Close example">Close</button>
+                </div>
+                <pre class="example-code"><code th:text="${slay.demo.code}"></code></pre>
+            </dialog>
         </div>
     </article>
 
@@ -56,5 +107,6 @@
     <p class="rail-note rail-note-quiet">I am Glamdring, Foehammer, and I do not fear domain complexity</p>
 </footer>
 
+<script th:src="@{/slays.js}"></script>
 </body>
 </html>

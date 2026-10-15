@@ -495,3 +495,94 @@ a:focus-visible,
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ---- smell example dialog ------------------------------------------- */
+
+.example-trigger {
+    display: block;
+    background: none;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.example-trigger::after {
+    content: " — show the code";
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--sapphire-light);
+}
+
+.example-trigger:hover,
+.example-trigger:focus-visible {
+    border-left-color: var(--sapphire-light);
+    outline: none;
+}
+
+.example-dialog {
+    width: min(90vw, 56rem);
+    padding: 0;
+    background: var(--ink);
+    color: var(--steel);
+    border: 1px solid var(--edge);
+}
+
+.example-dialog::backdrop {
+    background: rgba(5, 7, 12, 0.8);
+}
+
+.example-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--edge);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gondolin);
+}
+
+.example-close {
+    background: none;
+    border: 1px solid var(--edge);
+    color: var(--steel);
+    font: inherit;
+    font-size: var(--t-rail);
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+}
+
+.example-close:hover,
+.example-close:focus-visible {
+    border-color: var(--sapphire-light);
+}
+
+.example-code {
+    margin: 0;
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--frost);
+}
+
+/* ---- lesson explanation dialog -------------------------------------- */
+
+.example-trigger.explain-trigger::after {
+    content: " — explain this";
+}
+
+.explanation {
+    margin: 0;
+    padding: 1.25rem 1.5rem 1.5rem;
+    max-width: 62ch;
+    white-space: pre-line;
+    line-height: 1.65;
+    color: var(--frost);
+}
