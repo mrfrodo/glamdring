@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in — Glamdring.no</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="reading">
+
+<header class="rail rail-top">
+    <a class="wordmark" th:href="@{/}">Software architecture - domain-driven - from programmer to programmer</a>
+</header>
+
+<main class="log">
+    <p class="back"><a th:href="@{/}">Back to Glamdring</a></p>
+    <form class="login-form" th:action="@{/login}" method="post">
+        <h1>Log in</h1>
+        <p class="login-error" th:if="${param.error}">Wrong username or password.</p>
+        <p class="login-info" th:if="${param.logout}">You have been logged out.</p>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit" class="login-button">Log in</button>
+    </form>
+</main>
+
+</body>
+</html>

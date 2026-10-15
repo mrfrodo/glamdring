@@ -107,6 +107,8 @@ public class StaticSlayLogRepository implements SlayLogRepositoryPort {
 
                             The trick is a seam: an interface that stands for the thing that varies. Here the Spell interface is the seam, and every spell is one implementation of it.
 
+                            This is the Strategy pattern. Spell is the strategy interface, each spell is a concrete strategy, and SpellCaster is the context that uses whichever strategy it is given. Strategy is the usual way to reach Open/Closed, but not the only one: any polymorphism that replaces the switch does the same job.
+
                             What this costs: an interface plus one small class per spell, and SpellCaster, which no longer changes. A Spellbook that maps names to spells is optional. SpellCaster can hold that map itself. It is only split out so lookup and casting each have one job.
 
                             What you get back: a new spell is a new class and nothing existing is opened, so you cannot break fireball while adding frost. Each spell is tested alone. Three people can add three spells without touching the same file.

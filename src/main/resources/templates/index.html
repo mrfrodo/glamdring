@@ -16,6 +16,10 @@
 <header class="rail rail-top">
     <a class="wordmark" th:href="@{/}">Software architecture - domain-driven - from programmer to programmer</a>
     <p class="rail-note">Slay domain complexity with domain-driven design</p>
+    <a class="auth-link" th:unless="${loggedIn}" th:href="@{/login}">Log in</a>
+    <form class="auth-form" th:if="${loggedIn}" th:action="@{/logout}" method="post">
+        <button type="submit" class="auth-link">Log out</button>
+    </form>
 </header>
 
 <main class="label">

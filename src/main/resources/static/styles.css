@@ -114,6 +114,70 @@ body::after {
     color: var(--gondolin);
 }
 
+.auth-link {
+    font-family: var(--text);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: var(--sapphire-light);
+    text-decoration: none;
+    background: none;
+    border: 1px solid var(--edge);
+    padding: 0.15rem 0.5rem;
+    cursor: pointer;
+}
+
+a.auth-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.auth-link:hover,
+.auth-link:focus-visible {
+    color: var(--frost);
+    border-color: var(--sapphire-light);
+}
+
+.auth-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 22rem;
+}
+
+.login-form input {
+    padding: 0.5rem 0.7rem;
+    background: var(--ink);
+    color: var(--frost);
+    border: 1px solid var(--edge);
+    font-family: var(--text);
+}
+
+.login-button {
+    margin-top: 0.8rem;
+    padding: 0.6rem;
+    background: var(--sapphire);
+    color: var(--frost);
+    border: 0;
+    cursor: pointer;
+    font-family: var(--text);
+}
+
+.login-error {
+    color: #E8847F;
+}
+
+.login-info {
+    color: var(--gondolin);
+}
+
 .rail-note-quiet {
     font-family: var(--display);
     font-style: italic;
