@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/slays", "/styles.css", "/slays.js", "/*.png", "/login", "/error").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login").permitAll())
+                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/members").permitAll())
                 .logout(Customizer.withDefaults());
         return http.build();
     }

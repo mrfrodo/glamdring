@@ -16,9 +16,12 @@
     <a class="wordmark" th:href="@{/}">Software architecure - domain driven - from programmer to programmer</a>
     <p class="rail-note">Slay domain complexity</p>
     <a class="auth-link" th:unless="${loggedIn}" th:href="@{/login}">Log in</a>
-    <form class="auth-form" th:if="${loggedIn}" th:action="@{/logout}" method="post">
-        <button type="submit" class="auth-link">Log out</button>
-    </form>
+    <div class="auth-nav" th:if="${loggedIn}">
+        <form class="auth-form" th:action="@{/logout}" method="post">
+            <button type="submit" class="auth-link">Log out</button>
+        </form>
+        <a class="auth-link" th:href="@{/members}">Members</a>
+    </div>
 </header>
 
 <main class="log">

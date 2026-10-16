@@ -124,9 +124,11 @@ body::after {
     border: 1px solid var(--edge);
     padding: 0.15rem 0.5rem;
     cursor: pointer;
+    line-height: 1.2;
+    box-sizing: border-box;
 }
 
-a.auth-link {
+.rail > a.auth-link {
     position: absolute;
     top: 0;
     left: 0;
@@ -138,11 +140,26 @@ a.auth-link {
     border-color: var(--sapphire-light);
 }
 
-.auth-form {
+.auth-nav {
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: stretch;
+}
+
+.auth-nav > .auth-link {
+    margin-left: -1px;
+}
+
+.auth-form {
+    display: flex;
     margin: 0;
+}
+
+.auth-nav .auth-link {
+    display: flex;
+    align-items: center;
 }
 
 .login-form {

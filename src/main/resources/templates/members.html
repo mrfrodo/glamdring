@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members — Glamdring.no</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="reading">
+
+<header class="rail rail-top">
+    <a class="wordmark" th:href="@{/}">Software architecture - domain-driven - from programmer to programmer</a>
+    <div class="auth-nav">
+        <form class="auth-form" th:action="@{/logout}" method="post">
+            <button type="submit" class="auth-link">Log out</button>
+        </form>
+        <a class="auth-link" th:href="@{/members}">Members</a>
+    </div>
+</header>
+
+<main class="log">
+    <p class="back"><a th:href="@{/}">Back to Glamdring</a></p>
+    <h1>Welcome, <span th:text="${username}">user</span></h1>
+    <p>You are logged in. This area is only visible to authenticated users.</p>
+</main>
+
+</body>
+</html>
