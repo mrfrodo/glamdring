@@ -1,4 +1,4 @@
-package com.frodo.glamdring.domain.models;
+package com.frodo.glamdring.domain.models.tech;
 
 import java.time.Instant;
 import java.util.Objects;

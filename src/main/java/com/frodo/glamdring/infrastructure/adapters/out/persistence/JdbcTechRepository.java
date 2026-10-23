@@ -1,9 +1,9 @@
 package com.frodo.glamdring.infrastructure.adapters.out.persistence;
 
 import com.frodo.glamdring.application.ports.out.TechRepositoryPort;
-import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechId;
-import com.frodo.glamdring.domain.models.TechTopic;
+import com.frodo.glamdring.domain.models.tech.Tech;
+import com.frodo.glamdring.domain.models.tech.TechId;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
 

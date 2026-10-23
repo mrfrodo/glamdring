@@ -1,6 +1,6 @@
 package com.frodo.glamdring.application.ports.in;
 
-import com.frodo.glamdring.domain.models.Tech;
+import com.frodo.glamdring.domain.models.tech.Tech;
 
 import java.util.List;
 

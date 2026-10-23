@@ -1,6 +1,6 @@
 package com.frodo.glamdring.application.ports.in;
 
-import com.frodo.glamdring.domain.models.Slay;
+import com.frodo.glamdring.domain.models.slay.Slay;
 
 import java.util.List;
 

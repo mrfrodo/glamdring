@@ -2,8 +2,8 @@ package com.frodo.glamdring.infrastructure.adapters.out.messaging;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
-import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechTopic;
+import com.frodo.glamdring.domain.models.tech.Tech;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

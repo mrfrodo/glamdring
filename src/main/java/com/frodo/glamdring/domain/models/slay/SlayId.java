@@ -1,4 +1,4 @@
-package com.frodo.glamdring.domain.models;
+package com.frodo.glamdring.domain.models.slay;
 
 import java.util.Objects;
 

@@ -1,4 +1,7 @@
-package com.frodo.glamdring.domain.models;
+package com.frodo.glamdring.domain.models.slay;
+
+import com.frodo.glamdring.domain.models.Demo;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 
 import java.time.LocalDate;
 import java.util.Objects;

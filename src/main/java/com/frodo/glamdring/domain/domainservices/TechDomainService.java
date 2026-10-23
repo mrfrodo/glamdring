@@ -1,7 +1,7 @@
 package com.frodo.glamdring.domain.domainservices;
 
-import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechTopic;
+import com.frodo.glamdring.domain.models.tech.Tech;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 
 import java.time.Instant;
 import java.util.Comparator;

@@ -1,7 +1,7 @@
 package com.frodo.glamdring.infrastructure.adapters.in.rest;
 
 import com.frodo.glamdring.application.ports.in.GetTechUseCase;
-import com.frodo.glamdring.domain.models.Tech;
+import com.frodo.glamdring.domain.models.tech.Tech;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

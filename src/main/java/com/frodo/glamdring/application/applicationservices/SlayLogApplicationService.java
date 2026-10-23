@@ -2,7 +2,7 @@ package com.frodo.glamdring.application.applicationservices;
 
 import com.frodo.glamdring.application.ports.in.GetSlayLogUseCase;
 import com.frodo.glamdring.application.ports.out.SlayLogRepositoryPort;
-import com.frodo.glamdring.domain.models.Slay;
+import com.frodo.glamdring.domain.models.slay.Slay;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;

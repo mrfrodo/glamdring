@@ -1,8 +1,8 @@
 package com.frodo.glamdring.infrastructure.adapters.out.persistence;
 
 import com.frodo.glamdring.application.ports.out.SlayLogRepositoryPort;
-import com.frodo.glamdring.domain.models.Slay;
-import com.frodo.glamdring.domain.models.TechTopic;
+import com.frodo.glamdring.domain.models.slay.Slay;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

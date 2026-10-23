@@ -4,8 +4,8 @@ import com.frodo.glamdring.application.ports.in.GetTechUseCase;
 import com.frodo.glamdring.application.ports.out.ExternalTechFeedPort;
 import com.frodo.glamdring.application.ports.out.TechRepositoryPort;
 import com.frodo.glamdring.domain.domainservices.TechDomainService;
-import com.frodo.glamdring.domain.models.Tech;
-import com.frodo.glamdring.domain.models.TechTopic;
+import com.frodo.glamdring.domain.models.tech.Tech;
+import com.frodo.glamdring.domain.models.tech.TechTopic;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
