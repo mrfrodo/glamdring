@@ -47,6 +47,10 @@
             <p class="field-label">Reusable for</p>
             <p class="field-body" th:text="${#strings.listJoin(systemDesign.reusableFor, ', ')}">Activity streams</p>
         </div>
+        <div class="field" th:if="${c4DiagramUrl}">
+            <p class="field-label">Diagram</p>
+            <p class="field-body"><a th:href="@{${c4DiagramUrl}}">C4 Level 2: Container diagram</a></p>
+        </div>
     </article>
 </main>
 

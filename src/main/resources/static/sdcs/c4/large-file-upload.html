@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Large File Upload: C4 Container diagram — Glamdring.no</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* The diagram keeps a readable size on narrow screens and scrolls sideways instead. */
+        .c4-scroll { overflow-x: auto; margin-top: 0.5rem; }
+        .c4 { display: block; width: 100%; min-width: 760px; height: auto; font-family: var(--text); }
+        .c4 .boundary { fill: none; stroke: var(--gondolin); stroke-dasharray: 6 5; }
+        .c4 .boundary-label { fill: var(--gondolin); font-size: 12px; }
+        .c4 .person { fill: #0F2A52; stroke: var(--sapphire-light); }
+        .c4 .external { fill: #1B2433; stroke: var(--gondolin); }
+        .c4 .container { fill: var(--sapphire); stroke: var(--sapphire-light); }
+        .c4 .store { fill: #24406F; stroke: var(--sapphire-light); }
+        .c4 .name { fill: var(--frost); font-size: 14px; font-weight: 500; }
+        .c4 .tech { fill: var(--sapphire-light); font-size: 11px; }
+        .c4 .desc { fill: var(--steel); font-size: 11px; }
+        .c4 .rel { fill: none; stroke: var(--gondolin); stroke-width: 1.4; }
+        .c4 .rel-label { fill: var(--gondolin); font-size: 11px; }
+        .c4 .key { stroke: var(--sapphire-light); stroke-width: 2.4; }
+        .c4 .key-label { fill: var(--sapphire-light); font-size: 11px; font-weight: 500; }
+        .flow { margin: 0; padding-left: 1.25rem; }
+        .flow li { margin-bottom: 0.4rem; }
+        .flow em { color: var(--gondolin); font-style: normal; }
+    </style>
+</head>
+<body class="reading">
+
+<header class="rail rail-top">
+    <a class="wordmark" href="/">Software architecture - domain-driven - from programmer to programmer</a>
+    <div class="auth-nav">
+        <a class="auth-link" href="/members">Members</a>
+        <a class="auth-link" href="/sdcs">SDC</a>
+    </div>
+</header>
+
+<main class="log">
+    <p class="back"><a href="/sdcs/large-file-upload">Back to Large File Upload</a></p>
+    <h1 class="log-title">Large File Upload</h1>
+    <p class="log-lead">C4 Level 2: Container diagram. Classic example: Dropbox / Google Drive file upload.</p>
+
+    <article class="slay">
+        <div class="field">
+            <p class="field-label">Containers</p>
+            <div class="field-body">
+                <p>The highlighted arrow is the point of the design: file bytes go straight from the client
+                    to object storage. No arrow carries file bytes through the Upload API.</p>
+            </div>
+        </div>
+
+        <div class="c4-scroll">
+            <svg class="c4" viewBox="0 0 1000 600" role="img"
+                 aria-labelledby="c4-title c4-desc">
+                <title id="c4-title">Large File Upload: C4 Container diagram</title>
+                <desc id="c4-desc">A user works with a client app. The client asks the Upload API for presigned URLs
+                    and uploads file parts directly to object storage. The API tracks status in the metadata database
+                    and publishes an upload-completed event to the message queue. Processing workers read the file
+                    from object storage and mark it ready in the metadata database.</desc>
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="#8296AC"/>
+                    </marker>
+                    <marker id="arrow-key" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="#7FA8E8"/>
+                    </marker>
+                </defs>
+
+                <!-- system boundary -->
+                <rect class="boundary" x="240" y="20" width="745" height="560" rx="8"/>
+                <text class="boundary-label" x="256" y="44">Large File Upload [Software System]</text>
+
+                <!-- people and clients, outside the boundary -->
+                <rect class="person" x="20" y="30" width="170" height="80" rx="30"/>
+                <text class="name" x="105" y="62" text-anchor="middle">User</text>
+                <text class="tech" x="105" y="78" text-anchor="middle">[Person]</text>
+                <text class="desc" x="105" y="95" text-anchor="middle">Uploads large files</text>
+
+                <rect class="external" x="20" y="260" width="170" height="110" rx="6"/>
+                <text class="name" x="105" y="290" text-anchor="middle">Client App</text>
+                <text class="tech" x="105" y="307" text-anchor="middle">[Browser / Mobile app]</text>
+                <text class="desc" x="105" y="328" text-anchor="middle">Splits files into parts</text>
+                <text class="desc" x="105" y="343" text-anchor="middle">and uploads them</text>
+
+                <!-- containers -->
+                <rect class="container" x="290" y="70" width="190" height="110" rx="6"/>
+                <text class="name" x="385" y="100" text-anchor="middle">Upload API</text>
+                <text class="tech" x="385" y="117" text-anchor="middle">[Spring Boot]</text>
+                <text class="desc" x="385" y="138" text-anchor="middle">Authenticates, creates upload</text>
+                <text class="desc" x="385" y="153" text-anchor="middle">sessions, issues presigned URLs</text>
+
+                <rect class="container" x="560" y="70" width="180" height="110" rx="6"/>
+                <text class="name" x="650" y="100" text-anchor="middle">Message Queue</text>
+                <text class="tech" x="650" y="117" text-anchor="middle">[Kafka / Amazon SQS]</text>
+                <text class="desc" x="650" y="138" text-anchor="middle">Carries upload-completed</text>
+                <text class="desc" x="650" y="153" text-anchor="middle">events</text>
+
+                <rect class="container" x="800" y="70" width="170" height="110" rx="6"/>
+                <text class="name" x="885" y="100" text-anchor="middle">Processing Workers</text>
+                <text class="tech" x="885" y="117" text-anchor="middle">[ClamAV / Apache Tika]</text>
+                <text class="desc" x="885" y="138" text-anchor="middle">Scan, extract text,</text>
+                <text class="desc" x="885" y="153" text-anchor="middle">generate previews</text>
+
+                <!-- data stores (cylinders) -->
+                <path class="store" d="M290,400 A95,10 0 0 0 480,400 V490 A95,10 0 0 1 290,490 Z"/>
+                <ellipse class="store" cx="385" cy="400" rx="95" ry="10"/>
+                <text class="name" x="385" y="433" text-anchor="middle">Object Storage</text>
+                <text class="tech" x="385" y="450" text-anchor="middle">[Amazon S3 / MinIO]</text>
+                <text class="desc" x="385" y="469" text-anchor="middle">Stores bytes, assembles</text>
+                <text class="desc" x="385" y="484" text-anchor="middle">multipart chunks</text>
+
+                <path class="store" d="M600,400 A90,10 0 0 0 780,400 V490 A90,10 0 0 1 600,490 Z"/>
+                <ellipse class="store" cx="690" cy="400" rx="90" ry="10"/>
+                <text class="name" x="690" y="433" text-anchor="middle">Metadata Database</text>
+                <text class="tech" x="690" y="450" text-anchor="middle">[PostgreSQL]</text>
+                <text class="desc" x="690" y="469" text-anchor="middle">Owner, size, checksum,</text>
+                <text class="desc" x="690" y="484" text-anchor="middle">upload status</text>
+
+                <!-- relationships -->
+                <line class="rel" x1="55" y1="110" x2="55" y2="258" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="63" y="190">Uses</text>
+
+                <line class="rel" x1="190" y1="285" x2="288" y2="152" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="168" y="196" text-anchor="middle">Starts and completes</text>
+                <text class="rel-label" x="168" y="210" text-anchor="middle">uploads [HTTPS/JSON]</text>
+
+                <line class="rel key" x1="190" y1="345" x2="290" y2="438" marker-end="url(#arrow-key)"/>
+                <text class="key-label" x="150" y="410" text-anchor="middle">Uploads file parts directly</text>
+                <text class="key-label" x="150" y="424" text-anchor="middle">[HTTPS, presigned URL]</text>
+
+                <line class="rel" x1="385" y1="180" x2="385" y2="388" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="393" y="270">Creates presigned URLs,</text>
+                <text class="rel-label" x="393" y="284">completes multipart</text>
+                <text class="rel-label" x="393" y="298">upload [S3 API]</text>
+
+                <line class="rel" x1="470" y1="180" x2="640" y2="388" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="575" y="250">Reads/writes</text>
+                <text class="rel-label" x="575" y="264">upload status [JDBC]</text>
+
+                <line class="rel" x1="480" y1="125" x2="558" y2="125" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="520" y="105" text-anchor="middle">Publishes</text>
+                <text class="rel-label" x="520" y="118" text-anchor="middle">event</text>
+
+                <line class="rel" x1="740" y1="125" x2="798" y2="125" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="770" y="118" text-anchor="middle">Delivers</text>
+
+                <line class="rel" x1="830" y1="180" x2="742" y2="388" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="800" y="300">Marks file</text>
+                <text class="rel-label" x="800" y="314">READY [JDBC]</text>
+
+                <polyline class="rel" points="940,180 940,545 385,545 385,503" marker-end="url(#arrow)"/>
+                <text class="rel-label" x="662" y="537" text-anchor="middle">Reads file to process [S3 API]</text>
+            </svg>
+        </div>
+
+        <div class="field" style="margin-top: 2.5rem;">
+            <p class="field-label">Upload flow</p>
+            <div class="field-body">
+                <ol class="flow">
+                    <li>The user selects a file in the client app.</li>
+                    <li>The client asks the Upload API to start an upload <em>(name, size)</em>.</li>
+                    <li>The API creates a multipart upload in object storage and saves the upload as <em>PENDING</em>.</li>
+                    <li>The API returns presigned URLs, one per part.</li>
+                    <li>The client PUTs each part directly to object storage.</li>
+                    <li>The client tells the API the upload is complete <em>(part ETags)</em>.</li>
+                    <li>The API completes the multipart upload, sets the status to <em>UPLOADED</em> and publishes an upload-completed event.</li>
+                    <li>The queue delivers the event to the processing workers.</li>
+                    <li>The workers read the file, scan it, extract text and generate previews.</li>
+                    <li>The workers mark the file <em>READY</em>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="field">
+            <p class="field-label">Assumptions</p>
+            <div class="field-body">
+                <p>Not in the catalog entry, added to complete the diagram:</p>
+                <ul class="flow">
+                    <li>The user and the client app.</li>
+                    <li>The Upload API publishes the completion event after the client calls "complete".
+                        S3 event notifications sent straight to the queue would be equally valid.</li>
+                    <li>The protocols on the arrows (HTTPS/JSON, S3 API, JDBC).</li>
+                    <li>The multipart steps (create, upload parts, complete with ETags), from how S3 multipart upload works.</li>
+                </ul>
+            </div>
+        </div>
+    </article>
+</main>
+
+</body>
+</html>
