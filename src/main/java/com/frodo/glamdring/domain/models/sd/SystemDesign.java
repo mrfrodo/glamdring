@@ -51,18 +51,6 @@ public class SystemDesign {
         return new Builder();
     }
 
-    /** True if one of the key components carries this name, ignoring case. */
-    public boolean uses(String componentName) {
-        Objects.requireNonNull(componentName, "componentName must not be null");
-        return keyComponents.stream().anyMatch(component -> component.isNamed(componentName));
-    }
-
-    /** True if this pattern is listed as a template for the given system, ignoring case. */
-    public boolean isReusableFor(String system) {
-        Objects.requireNonNull(system, "system must not be null");
-        return reusableFor.stream().anyMatch(target -> target.equalsIgnoreCase(system.strip()));
-    }
-
     public SystemDesignId getId() { return id; }
     public String getName() { return name; }
     public String getClassicExample() { return classicExample; }
@@ -95,7 +83,7 @@ public class SystemDesign {
         private final List<KeyComponent> keyComponents = new ArrayList<>();
         private final List<String> reusableFor = new ArrayList<>();
 
-        public Builder id(int id) { this.id = new SystemDesignId(id); return this; }
+        public Builder id(String slug) { this.id = new SystemDesignId(slug); return this; }
         public Builder name(String name) { this.name = name; return this; }
         public Builder classicExample(String classicExample) { this.classicExample = classicExample; return this; }
         public Builder coreBlueprint(String coreBlueprint) { this.coreBlueprint = coreBlueprint; return this; }

@@ -3,13 +3,15 @@ package com.frodo.glamdring.application.applicationservices;
 import com.frodo.glamdring.application.ports.in.GetSystemDesignCatalogUseCase;
 import com.frodo.glamdring.application.ports.out.SDCRepositoryPort;
 import com.frodo.glamdring.domain.models.sd.SystemDesign;
+import com.frodo.glamdring.domain.models.sd.SystemDesignId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Application service implementing the GetSystemDesignCatalogUseCase inbound port.
- * Orchestrates reading the catalog; the filtering rules live in SystemDesign.
+ * Orchestrates reading the catalog; the rules for a valid design live in SystemDesign.
  */
 @Service
 public class SystemDesignCatalogApplicationService implements GetSystemDesignCatalogUseCase {
@@ -26,16 +28,7 @@ public class SystemDesignCatalogApplicationService implements GetSystemDesignCat
     }
 
     @Override
-    public List<SystemDesign> getPatternsUsing(String componentName) {
-        return getSystemDesigns().stream()
-                .filter(pattern -> pattern.uses(componentName))
-                .toList();
-    }
-
-    @Override
-    public List<SystemDesign> getPatternsReusableFor(String system) {
-        return getSystemDesigns().stream()
-                .filter(pattern -> pattern.isReusableFor(system))
-                .toList();
+    public Optional<SystemDesign> getSystemDesign(SystemDesignId id) {
+        return systemDesignCatalogRepositoryPort.findById(id);
     }
 }

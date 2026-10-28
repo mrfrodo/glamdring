@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${systemDesign.name} + ' — Glamdring.no'">System Design — Glamdring.no</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Public+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body class="reading">
+
+<header class="rail rail-top">
+    <a class="wordmark" th:href="@{/}">Software architecture - domain-driven - from programmer to programmer</a>
+    <div class="auth-nav">
+        <form class="auth-form" th:action="@{/logout}" method="post">
+            <button type="submit" class="auth-link">Log out</button>
+        </form>
+        <a class="auth-link" th:href="@{/members}">Members</a>
+        <a class="auth-link" th:href="@{/sdcs}">SDC</a>
+    </div>
+</header>
+
+<main class="log">
+    <p class="back"><a th:href="@{/sdcs}">Back to System Design Catalog</a></p>
+    <h1 class="log-title" th:text="${systemDesign.name}">The Fan-Out Architecture</h1>
+    <p class="log-lead" th:text="${systemDesign.classicExample}">News Feed / Social Media Timeline</p>
+
+    <article class="slay">
+        <div class="field">
+            <p class="field-label">Blueprint</p>
+            <p class="field-body" th:text="${systemDesign.coreBlueprint}">Core blueprint</p>
+        </div>
+        <div class="field">
+            <p class="field-label">Components</p>
+            <div class="field-body">
+                <p th:each="component : ${systemDesign.keyComponents}">
+                    <strong th:text="${component.name}">Message Queue</strong>
+                    <span th:if="${!#lists.isEmpty(component.technologies)}"
+                          th:text="'(' + ${#strings.listJoin(component.technologies, ', ')} + ')'">(Kafka, RabbitMQ)</span>
+                    — <span th:text="${component.role}">Decouples post creation from feed generation.</span>
+                </p>
+            </div>
+        </div>
+        <div class="field">
+            <p class="field-label">Reusable for</p>
+            <p class="field-body" th:text="${#strings.listJoin(systemDesign.reusableFor, ', ')}">Activity streams</p>
+        </div>
+    </article>
+</main>
+
+</body>
+</html>

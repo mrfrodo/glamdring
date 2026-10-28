@@ -1,0 +1,26 @@
+{
+  "name": "The Fan-Out Architecture",
+  "classicExample": "News Feed / Social Media Timeline",
+  "coreBlueprint": "Handles asynchronous distribution of content from a single producer to millions of followers using push (write-time) or pull (read-time) models.",
+  "keyComponents": [
+    {
+      "name": "Message Queue",
+      "role": "Decouples post creation from feed generation.",
+      "technologies": ["Kafka", "RabbitMQ"]
+    },
+    {
+      "name": "Fan-Out Workers",
+      "role": "Background workers that duplicate posts into individual user timeline caches."
+    },
+    {
+      "name": "Graph / NoSQL Database",
+      "role": "Stores user relationships and timeline pointers."
+    }
+  ],
+  "reusableFor": [
+    "Activity streams",
+    "Notification feeds",
+    "Live sports and stock tickers",
+    "Follower-based chat broadcasts"
+  ]
+}

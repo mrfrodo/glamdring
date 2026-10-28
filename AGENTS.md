@@ -1,3 +1,5 @@
+### Always be honest when answering a question. If you do not know the answer answer I DO NOT KNOW.
+
 ### Never git commit or git push
 
 ### tech stack:

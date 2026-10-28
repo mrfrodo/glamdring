@@ -18,7 +18,7 @@
             <button type="submit" class="auth-link">Log out</button>
         </form>
         <a class="auth-link" th:href="@{/members}">Members</a>
-        <a class="auth-link" th:href="@{/sdc}">SDC</a>
+        <a class="auth-link" th:href="@{/sdcs}">SDC</a>
     </div>
 </header>
 
@@ -26,7 +26,9 @@
     <p class="back"><a th:href="@{/members}">Back to Members</a></p>
     <h1>System Design Catalog</h1>
     <ul th:unless="${#lists.isEmpty(systemDesigns)}">
-        <li th:each="systemDesign : ${systemDesigns}" th:text="${systemDesign.name}">The Fan-Out Architecture</li>
+        <li th:each="systemDesign : ${systemDesigns}">
+            <a th:href="@{/sdcs/{slug}(slug=${systemDesign.id.value})}" th:text="${systemDesign.name}">The Fan-Out Architecture</a>
+        </li>
     </ul>
     <p th:if="${#lists.isEmpty(systemDesigns)}">No system designs yet.</p>
 </main>

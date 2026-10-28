@@ -19,8 +19,4 @@ public record KeyComponent(String name, String role, List<String> technologies) 
         if (role.isBlank()) throw new IllegalArgumentException("role must not be blank");
         technologies = technologies == null ? List.of() : List.copyOf(technologies);
     }
-
-    public boolean isNamed(String componentName) {
-        return name.equalsIgnoreCase(componentName.strip());
-    }
 }

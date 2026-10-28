@@ -1,0 +1,38 @@
+{
+  "name": "Large File Upload",
+  "classicExample": "Dropbox / Google Drive file upload",
+  "coreBlueprint": "Clients upload large files directly to object storage via short-lived presigned URLs, split into resumable multipart chunks. App servers never touch the bytes - they only issue URLs and track metadata. A completion event triggers asynchronous processing such as virus scanning, text extraction and thumbnails.",
+  "keyComponents": [
+    {
+      "name": "Upload API",
+      "role": "Authenticates the client, creates the upload session and hands out presigned part URLs.",
+      "technologies": ["Spring Boot"]
+    },
+    {
+      "name": "Object Storage",
+      "role": "Durably stores the file bytes; assembles multipart chunks into one object.",
+      "technologies": ["Amazon S3", "MinIO"]
+    },
+    {
+      "name": "Metadata Database",
+      "role": "Tracks owner, size, checksum and upload status (PENDING, UPLOADED, READY).",
+      "technologies": ["PostgreSQL"]
+    },
+    {
+      "name": "Message Queue",
+      "role": "Carries upload-completed events so processing is decoupled from the upload path.",
+      "technologies": ["Kafka", "Amazon SQS"]
+    },
+    {
+      "name": "Processing Workers",
+      "role": "Scan, extract text and generate previews before the file is marked READY.",
+      "technologies": ["ClamAV", "Apache Tika"]
+    }
+  ],
+  "reusableFor": [
+    "Video upload (YouTube)",
+    "Photo sharing",
+    "Cloud backup",
+    "Document ingestion for RAG"
+  ]
+}
